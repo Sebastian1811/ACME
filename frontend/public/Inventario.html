@@ -8,12 +8,96 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>Inventario</title>
+    <title>ACME Inventario</title>
   </head>
   <body>
-    <h1>Bienvendio a inventario</h1>
-
-    <!-- Optional JavaScript; choose one of the two! -->
+    <h1 class= "fw-bold text-center py-2">Inventario</h1>
+    <div class="container-xl bg-secondary ">
+      <div class="row align-items-stretch">
+          <div class="col">
+            <h3 class="fw-bold text-center">Inventario</h3>
+            <div class = "table-responsive">
+            <table  class="table table-bordered border-dark" >
+              <thead class="table-primary border-dark"> 
+                <tr >
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Descripcion</th>
+                  <th>Cantidad</th>
+                  <th>Precio</th>
+                </tr>
+              </thead>
+              <tbody class="table-light border-dark">
+                <tr>
+                  <td>001</td>
+                  <td>Canivex</td>
+                  <td>Multivitaminico oral</td>
+                  <td>100</td>
+                  <td>15000</td>
+                </tr>
+                <tr>
+                  <td>001</td>
+                  <td>Canivex</td>
+                  <td>Multivitaminico oral</td>
+                  <td>100</td>
+                  <td>15000</td>
+                </tr>
+                <tr>
+                  <td>001</td>
+                  <td>Canivex</td>
+                  <td>Multivitaminico oral</td>
+                  <td>100</td>
+                  <td>15000</td>
+                </tr>
+                <tr>
+                  <td>001</td>
+                  <td>Canivex</td>
+                  <td>Multivitaminico oral</td>
+                  <td>100</td>
+                  <td>15000</td>
+                </tr>
+              </tbody>
+             </table>
+            </div>
+          </div>
+          <div class="col">
+           <h1 class= "fw-bold text-center py-0.2">ACME</h1>
+           <h4 class= "fw-bold text-center py-0.1" style = "margin-top: -15px;" >Clinica veterinaria</h4>
+           <form action="Facturacion.html">
+            <div class="row align-items-stretch">
+              <div class="col">
+                   <div class="mb-4 col-md-10">
+                       <label for="Id" class="form-label">Id Producto</label>
+                       <input type="Id" class = "form-control" name="Id">
+                   </div>
+              </div>
+              <div class="col">
+                   <div class="mb-4 col-md-15">
+                    <label for="Producto" class="form-label">Nombre Producto</label>
+                    <input type="text" class = "form-control" name="Producto">
+                   </div>
+              </div>
+            </div>
+            <div class="row align-items-stretch">
+              <div class="col">
+                   <div class="d-grid col-md-2">
+                       <button type="button" class="btn btn-primary">Agregar</button>
+                   </div>
+              </div>
+              <div class="col">
+                   <div class="d-grid col-md-2">
+                    <button type="button" class="btn btn-primary">Eliminar</button>
+                   </div>
+              </div>
+              <div class="col"> 
+                   <div class="d-grid col-md-4">
+                    <button type="submit" class="btn btn-primary">Pagar</button>
+                   </div>
+              </div>
+            </div> 
+          </div>
+      </div> 
+    </div>
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
