@@ -6,10 +6,14 @@ from database.models.Empleado import Empleado
 from database.models.Cliente import Cliente
 from database.models.Mascota import Mascota
 from database.models.Producto import Producto
+from database.models.Factura import Factura
+from database.models.Detalle import Detalle
+
 from routes.Cliente import bp as bpCliente
 from routes.Empleado import bp as bpEmpleado
 from routes.Mascota import bp as bpMascota
 from routes.Producto import bp as bpProducto
+from routes.Factura import bp as bpFactura
 
 Base.metadata.create_all(Engine)
 session = Session
@@ -24,3 +28,4 @@ app.register_blueprint(bpCliente)
 app.register_blueprint(bpEmpleado)
 app.register_blueprint(bpMascota)
 app.register_blueprint(bpProducto)
+app.register_blueprint(bpFactura)
