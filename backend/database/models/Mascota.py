@@ -5,11 +5,11 @@ from sqlalchemy import Column,Integer,String,DateTime
 
 class Mascota(Base):
     __tablename__ = 'mascota'
-    id_propietario = Column(Integer,ForeignKey('cliente.id'),primary_key=True,)
-    nombre = Column(String(30))
-    tipo = Column(String(30))
-    raza = Column(String(50))
-    fecha_nacimiento = Column(DateTime)
+    id_propietario = Column(Integer,ForeignKey('cliente.id'),primary_key=True)
+    nombre = Column(String(30),nullable=False)
+    tipo = Column(String(30),nullable=False)
+    raza = Column(String(50),nullable=False)
+    fecha_nacimiento = Column(DateTime,nullable=False)
     def __init__(self,id_prop,nombre,tipo,raza,fecha_nacimiento):
         self.id_propietario = id_prop
         self.nombre = nombre
