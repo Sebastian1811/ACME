@@ -7,7 +7,6 @@ class Producto(Base):
     nombre = Column(String(40))
     precio = Column(Integer)
     tipo = Column(String(40))
-    descripcion = Column(String(80))
     def __init__(self,id,nombre,precio,tipo):
         self.id = id
         self.nombre = nombre

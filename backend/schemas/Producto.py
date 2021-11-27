@@ -5,4 +5,3 @@ class ProductoSchema(Schema):
     nombre = fields.String()
     precio = fields.Number()
     tipo = fields.String()
-    descripcion = fields.String()
