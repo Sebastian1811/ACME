@@ -1,6 +1,5 @@
 from flask import Blueprint,request,jsonify
 from sqlalchemy import select
-from sqlalchemy.orm import session
 from database.db import Session
 from database.models.Mascota import Mascota
 from schemas.Mascota import MascotaSchema
