@@ -28,7 +28,7 @@ def get_mascota(mascota_id):
     mascota = schema.dump(result)
     return jsonify(mascota)
 
-@bp.route('/mascota',methods['POST'])
+@bp.route('/mascota',methods=['POST'])
 
 def post_mascota():
     posted_mascota = MascotaSchema().load(request.get_json())
