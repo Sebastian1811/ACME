@@ -1,4 +1,4 @@
-from flask import Blueprint, json,jsonify
+from flask import Blueprint,jsonify,request
 from sqlalchemy import select
 from database.models.Empleado import Empleado
 from schemas.Empleado import EmpleadoSchema
@@ -26,3 +26,14 @@ def get_empleado(empleado_id):
     result = session.execute(stmt).scalars().one()
     empleado = schema.dump(result)
     return jsonify(empleado)
+
+@bp.route('/empleado',methods=['POST'])
+
+def post_empleado():
+    posted_empleado = EmpleadoSchema().load(request.get_json())
+    empleado = Empleado(**posted_empleado)
+    session.add(empleado)
+    session.commit()
+    new_empleado = EmpleadoSchema().dump(empleado)
+    session.close()
+    return jsonify(new_empleado),201
