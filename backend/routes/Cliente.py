@@ -1,7 +1,6 @@
 from flask import Blueprint,jsonify,request
 from sqlalchemy import select
 from sqlalchemy.orm import session
-from database.models.Empleado import Empleado
 from database.models.Cliente import Cliente
 from schemas.Cliente import ClienteSchema
 from database.db import Session

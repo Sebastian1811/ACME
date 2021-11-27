@@ -18,7 +18,7 @@ def index_mascotas():
     session.close()
     return jsonify(results = mascotas)
 
-@bp.route('/mascotas/<id:mascota_id>')
+@bp.route('/mascotas/<int:mascota_id>')
 
 def get_mascota(mascota_id):
     schema = MascotaSchema()
