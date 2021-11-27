@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from database.models.Usuario import Usuario
 from database.db import Base,Engine,Session
 from database.models.Empleado import Empleado
@@ -13,6 +14,7 @@ from routes.Producto import bp as bpProducto
 Base.metadata.create_all(Engine)
 session = Session
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def index():
