@@ -3,4 +3,5 @@
 database/__pycache__
 database/models/__pycache__
 routes/__pycache__
+schemas/__pycache__
 .env
