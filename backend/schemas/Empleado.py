@@ -6,3 +6,4 @@ class EmpleadoSchema(Schema):
     telefono =fields.String() 
     id_tipo = fields.String()
     direccion = fields.String()
+    ventasTotales = fields.Number()
