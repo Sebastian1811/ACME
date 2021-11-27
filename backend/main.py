@@ -5,9 +5,6 @@ from database.models.Empleado import Empleado
 from database.models.Cliente import Cliente
 from database.models.Mascota import Mascota
 from database.models.Producto import Producto
-from sqlalchemy import select
-from flask import Flask,jsonify,request
-from flask import Blueprint
 
 
 Base.metadata.create_all(Engine)
