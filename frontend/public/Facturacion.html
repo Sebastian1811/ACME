@@ -16,17 +16,15 @@
         background: #ffE1E1;
         background: linear-gradient(to right, #58a3d1,#ffE1E1);
       }
-
       thead{
         background-color: #2f2f2f;
         color: white;
       }
-
-      .primerColumn{
+      td:first-child {
         font-weight: bold;
-        margin-left: 50px;
+        text-align: left;
+        padding-left: 25px;
       }
-
       .padd{
         padding-top: -5px;
       }
@@ -150,14 +148,14 @@
             <div class="col-lg-4 col-sm-8">
 
             </div>
-            <div class="col-lg-4 col-sm-8 ml-auto" align="right">
+            <div class="col-lg-4 col-sm-8 ml-auto">
               <table class="table table-clear">
                 <tbody>
                   <tr>
-                    <td class="left">
-                      <strong>Total</strong>
+                    <td>
+                      Total
                     </td>
-                    <td class="right" id="valTot">
+                    <td id="valTot">
                       <!-- SUMA DE LOS VALORES TOTALES DE LOS PRODUCTOS EN LA FACTURA -->
                     </td>
                   </tr>
@@ -233,8 +231,8 @@
     let nombresProd = ["Consulta general", "Esterilización perros raza grande", "Esterilización perros raza pequeña", "Esterilización gatos", "Hemograma"];
     let valorProd = [15000, 300000, 320000, 320000, 20000];
     var optProd = document.getElementById("selPro");
-    for(var i=0; i<nombresProd.length; i++){
-      var option = document.createElement("option");
+    for(let i=0; i<nombresProd.length; i++){
+      let option = document.createElement("option");
       option.text = nombresProd[i] + " | $" + valorProd[i].toString();
       optProd.add(option);
     }
@@ -243,14 +241,9 @@
     var valorTotalFac = 0;
     document.getElementById("valTot").innerHTML = "$0,00";
     function suma(filas){
-      var impTotal = "";
-      var valor = table.rows[filas].cells[3].innerHTML;
-      valor = valor.slice(1);
-      //valor = valor.slice(0, valor.length-1);
-      //valor = valor.slice(0, valor.length-1);
-      valor = valor.replace(",", "");
-      valor = valor.replace(".", "");
-      valor = parseInt(valor);
+      let impTotal = "";
+      let precio = table.rows[filas].cells[3].innerHTML;
+      let valor = limpiarPrecio(precio);
       valorTotalFac += valor;
       
       impTotal = formato(valorTotalFac);
@@ -263,18 +256,17 @@
     // FUNCIÓN PARA AGREGAR ELEMENTOS A LA TABLA DE LA FACTURA
     var tbodyRef = table.getElementsByTagName('tbody')[0];
     function agregarProducto(){
-      var tbodyRowCount = table.tBodies[0].rows.length;
-      var cant = document.getElementById("cantidadProducto").value; // Cantidad del producto
-      var row = tbodyRef.insertRow();
-      var cell1 = row.insertCell(0);
-      var cell2 = row.insertCell(1);
-      var cell3 = row.insertCell(2);
-      var cell4 = row.insertCell(3);
-      var x = document.getElementById("selPro").selectedIndex;
-      var y = document.getElementById("selPro").options;
+      let tbodyRowCount = table.tBodies[0].rows.length;
+      let cant = document.getElementById("cantidadProducto").value; // Cantidad del producto
+      let row = tbodyRef.insertRow();
+      let cell1 = row.insertCell(0);
+      let cell2 = row.insertCell(1);
+      let cell3 = row.insertCell(2);
+      let cell4 = row.insertCell(3);
+      let x = document.getElementById("selPro").selectedIndex;
+      let y = document.getElementById("selPro").options;
       indice = y[x].index - 1;
       cell1.innerHTML = nombresProd[indice];
-      cell1.classList.add("primerColumn");
       cell2.innerHTML = "$" + formato(valorProd[indice]);
       cell3.innerHTML = cant;
       cell4.innerHTML = "$" + formato(valorProd[indice] * cant);
@@ -284,7 +276,10 @@
 
     // DAR FORMATO A NUMEROS
     function formato(numero){
-      if(numero > 999 && numero < 1000000){
+      if(numero < 1000){
+        return String(numero);
+      }
+      else if(numero < 1000000){
         return formatoMil(numero);
       }else if(numero >= 1000000){
         return formatoMillon(numero);
@@ -294,7 +289,7 @@
     // DAR FORMATO DE MIL
     function formatoMil(numero){
       string = numero.toString();
-      var posPunto = string.length % 3;
+      let posPunto = string.length % 3;
       if(posPunto == 0){
         string = string.substring(0, posPunto+3) + "." + string.substring(posPunto+3, string.length);
       }else{
@@ -305,7 +300,7 @@
 
     // MUESTRA EL VALOR TOTAL DE LA FACTURA EN EL MODAL
     function mostrarValorFacturaModal(){
-      var confFact = "El total de la factura es de " + document.getElementById("valTot").innerHTML;
+      let confFact = "El total de la factura es de " + document.getElementById("valTot").innerHTML;
       document.getElementById("divConfFact").innerHTML = confFact;
     }
 
@@ -313,6 +308,16 @@
       document.getElementById("bodyFact").innerHTML = "";
       document.getElementById("valTot").innerHTML = "$0,00";
       valorTotalFac = 0;
+    }
+
+    // CONVIERTE EL STRING DE UN PRECIO A UN NUMERO ENTERO
+    function limpiarPrecio(string){
+      let valor = string;
+      valor = valor.slice(1);
+      valor = valor.replace(",", "");
+      valor = valor.replace(".", "");
+      valor = parseInt(valor);
+      return valor
     }
 
   </script>
