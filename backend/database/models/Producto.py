@@ -1,5 +1,4 @@
 from sqlalchemy import Column,Integer,String
-from sqlalchemy.sql.expression import desc
 from ..db import Base
 
 class Producto(Base):
