@@ -37,3 +37,17 @@ def post_cliente():
     new_cliente = ClienteSchema().dump(cliente)
     session.close()
     return jsonify(new_cliente),201
+
+@bp.route('/cliente/delete/<int:cliente_id>',methods=['DELETE'])
+
+def delete_cliente(cliente_id):
+    schema = ClienteSchema()
+    stmt = select(Cliente).where(Cliente.id == cliente_id)
+    result = session.execute(stmt).scalars().one()
+    session.delete(result)
+    session.commit()
+    cliente = schema.dump(result)
+    return jsonify(cliente)
+
+
+

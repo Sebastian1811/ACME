@@ -35,3 +35,15 @@ def post_mascota():
     session.commit()
     new_mascota = MascotaSchema().dump(mascota)
     return jsonify(new_mascota),201
+
+@bp.route('/mascota/delete/<int:mascota_id>',methods=['DELETE'])
+
+def delete_mascota(mascota_id):
+    schema = MascotaSchema()
+    stmt = select(Mascota).where(Mascota.id == mascota_id)
+    result = session.execute(stmt).scalars().one()
+    session.delete(result)
+    session.commit()
+    mascota = schema.dump(result)
+    return jsonify(mascota)
+

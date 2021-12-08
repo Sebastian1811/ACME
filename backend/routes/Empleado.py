@@ -14,6 +14,7 @@ def index_empleado():
     schema = EmpleadoSchema(many=1)
     stmt = select(Empleado)
     result = session.execute(stmt).scalars().all()
+    print(result)
     empleados = schema.dump(result)
     session.close()
     return jsonify(results = empleados)
@@ -24,7 +25,8 @@ def get_empleado(empleado_id):
     schema = EmpleadoSchema()
     stmt = select(Empleado).where(Empleado.id == empleado_id)
     result = session.execute(stmt).scalars().one()
-    empleado = schema.dump(result)
+    empleado = schema.dump(result)  
+    session.close()
     return jsonify(empleado)
 
 @bp.route('/empleado',methods=['POST'])
@@ -37,3 +39,14 @@ def post_empleado():
     new_empleado = EmpleadoSchema().dump(empleado)
     session.close()
     return jsonify(new_empleado),201
+
+@bp.route('/empleado/delete/<int:empleado_id>',methods=['DELETE'])
+
+def delete_empleado(empleado_id):
+    schema = EmpleadoSchema()
+    stmt = select(Empleado).where(Empleado.id == empleado_id)
+    result = session.execute(stmt).scalars().one()
+    session.delete(result)
+    session.commit()
+    empleado = schema.dump(result)
+    return jsonify(empleado)
