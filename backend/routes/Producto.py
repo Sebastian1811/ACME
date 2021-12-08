@@ -1,7 +1,5 @@
 from flask import Blueprint,request,jsonify
 from sqlalchemy import select
-from backend.database.models.Mascota import Mascota
-from backend.schemas.Mascota import MascotaSchema
 from database.db import Session
 from database.models.Producto import Producto
 from schemas.Producto import ProductoSchema
@@ -13,7 +11,17 @@ session = Session
 
 def index_producto():
     schema = ProductoSchema(many=1)
-    stmt = select(Producto)
+    stmt = select(Producto).where(Producto.tipo=='producto')
+    result = session.execute(stmt).scalars().all()
+    productos = schema.dump(result)
+    session.close()
+    return jsonify(results = productos)
+
+@bp.route('/procedimientos')    
+
+def index_procedimientos():
+    schema = ProductoSchema(many=1)
+    stmt = select(Producto).where(Producto.tipo =='procedimiento')
     result = session.execute(stmt).scalars().all()
     productos = schema.dump(result)
     session.close()
@@ -39,14 +47,15 @@ def post_producto():
     new_producto = ProductoSchema().dump(producto)
     return jsonify(new_producto),201
 
-@bp.route('/producto/delete/<int:mascota_id>',methods=['DELETE'])
+@bp.route('/producto/delete/<int:producto_id>',methods=['DELETE'])
 
-def delete_mascota(mascota_id):
-    schema = MascotaSchema()
-    stmt = select(Mascota).where(Mascota.id == mascota_id)
+def delete_producto(producto_id):
+    schema = ProductoSchema()
+    stmt = select(Producto).where(Producto.id == producto_id)
     result = session.execute(stmt).scalars().one()
     session.delete(result)
     session.commit()
-    mascota = schema.dump(result)
-    return jsonify(mascota)
+    producto = schema.dump(result)
+    session.close()
+    return jsonify(producto)
 
