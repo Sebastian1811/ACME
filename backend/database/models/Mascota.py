@@ -10,8 +10,8 @@ class Mascota(Base):
     tipo = Column(String(30),nullable=False)
     raza = Column(String(50),nullable=False)
     fecha_nacimiento = Column(DateTime,nullable=False)
-    def __init__(self,id_prop,nombre,tipo,raza,fecha_nacimiento):
-        self.id_propietario = id_prop
+    def __init__(self,id_propietario,nombre,tipo,raza,fecha_nacimiento):
+        self.id_propietario = id_propietario
         self.nombre = nombre
         self.tipo = tipo
         self.raza = raza 
