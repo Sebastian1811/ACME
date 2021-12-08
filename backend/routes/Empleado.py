@@ -49,4 +49,5 @@ def delete_empleado(empleado_id):
     session.delete(result)
     session.commit()
     empleado = schema.dump(result)
+    session.close()
     return jsonify(empleado)
