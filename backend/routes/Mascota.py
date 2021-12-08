@@ -45,5 +45,6 @@ def delete_mascota(mascota_id):
     session.delete(result)
     session.commit()
     mascota = schema.dump(result)
+    session.close()
     return jsonify(mascota)
 
