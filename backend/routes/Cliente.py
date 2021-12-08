@@ -59,6 +59,7 @@ def getMascotas(cliente_id):
     Join = join(Cliente,Mascota,Cliente.id == Mascota.id_propietario)
     stmt = select(Mascota.nombre).select_from(Join).where(Cliente.id == cliente_id)
     result = session.execute(stmt).scalars().all()
+    session.close()
     return result
 
 
