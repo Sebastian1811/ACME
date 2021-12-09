@@ -5,5 +5,5 @@ database/models/__pycache__
 routes/__pycache__
 schemas/__pycache__
 .env
-alembic/__pycache__
-alembic/versions/__pycache__
+/alembic
+alembic.ini
