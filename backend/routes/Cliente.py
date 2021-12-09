@@ -1,11 +1,11 @@
 from flask import Blueprint,jsonify,request
 from sqlalchemy import select
 from sqlalchemy.orm import session
-from sqlalchemy.sql.roles import ColumnListRole
 from database.models.Cliente import Cliente
 from database.models.Mascota import Mascota
 from sqlalchemy.sql.expression import join
 from schemas.Cliente import ClienteSchema
+from schemas.Mascota import MascotaSchema
 from database.db import Session
 
 session = Session
@@ -28,6 +28,7 @@ def get_cliente(cliente_id):
     stmt = select(Cliente).where(Cliente.id == cliente_id)
     result = session.execute(stmt).scalars().one()
     cliente = schema.dump(result)
+    session.close()
     return jsonify(cliente)
 
 @bp.route('/cliente',methods=['POST'])
@@ -56,10 +57,12 @@ def delete_cliente(cliente_id):
 @bp.route('/cliente/<int:cliente_id>/mascotas')
 
 def getMascotas(cliente_id):
+    schema = MascotaSchema(many=1)
     Join = join(Cliente,Mascota,Cliente.id == Mascota.id_propietario)
-    stmt = select(Mascota.nombre).select_from(Join).where(Cliente.id == cliente_id)
+    stmt = select(Mascota).select_from(Join).where(Cliente.id == cliente_id)
     result = session.execute(stmt).scalars().all()
+    mascotas = schema.dump(result)
     session.close()
-    return result
+    return  jsonify(results = mascotas)
 
 
