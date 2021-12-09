@@ -2,7 +2,9 @@ from flask import Blueprint,jsonify,request
 from sqlalchemy import select
 from database.models.Empleado import Empleado
 from schemas.Empleado import EmpleadoSchema
+from marshmallow import INCLUDE
 from database.db import Session
+from werkzeug.security import check_password_hash
 
 session = Session
 
@@ -32,7 +34,7 @@ def get_empleado(empleado_id):
 @bp.route('/empleado',methods=['POST'])
 
 def post_empleado():
-    posted_empleado = EmpleadoSchema().load(request.get_json())
+    posted_empleado = EmpleadoSchema().load(request.get_json(),unknown=INCLUDE)
     empleado = Empleado(**posted_empleado)
     session.add(empleado)
     session.commit()
@@ -51,3 +53,19 @@ def delete_empleado(empleado_id):
     empleado = schema.dump(result)
     session.close()
     return jsonify(empleado)
+
+@bp.route('/login',methods=['POST'])
+def login():
+
+    user = request.get_json()['username']
+    passw = request.get_json()['password']
+    stmt = select(Empleado).where(Empleado.id == user)
+    try:
+        result = session.execute(stmt).scalars().one()
+        session.close()
+    except:
+        return "Username o password incorrecta"
+    if not check_password_hash(result.password,passw):
+        return "Username o password incorrecta"    
+
+    return "SUCCESFULL"    
