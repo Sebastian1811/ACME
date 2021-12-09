@@ -1,8 +1,11 @@
 from flask import Blueprint,request,jsonify
 from sqlalchemy import select
 from database.db import Session
+from sqlalchemy.sql.expression import join
 from database.models.Mascota import Mascota
+from database.models.Cliente import Cliente
 from schemas.Mascota import MascotaSchema
+from schemas.Cliente import ClienteSchema
 
 bp = Blueprint('mascota',__name__)
 session = Session
@@ -48,3 +51,13 @@ def delete_mascota(mascota_id):
     session.close()
     return jsonify(mascota)
 
+@bp.route('/mascota/<int:id_mascota>/owner')
+
+def getMascotas(id_mascota):
+    schema = ClienteSchema()
+    Join = join(Mascota,Cliente,Mascota.id_propietario == Cliente.id)
+    stmt = select(Cliente).select_from(Join).where(Mascota.id == id_mascota)
+    result = session.execute(stmt).scalars().one()
+    owner = schema.dump(result)
+    session.close()
+    return  jsonify(owner)
