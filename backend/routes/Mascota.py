@@ -40,7 +40,7 @@ def post_mascota():
 
 def delete_mascota(mascota_id):
     schema = MascotaSchema()
-    stmt = select(Mascota).where(Mascota.id == mascota_id)
+    stmt = select(Mascota).where(Mascota.id_propietario == mascota_id)
     result = session.execute(stmt).scalars().one()
     session.delete(result)
     session.commit()
