@@ -16,7 +16,6 @@ def index_empleado():
     schema = EmpleadoSchema(many=1)
     stmt = select(Empleado)
     result = session.execute(stmt).scalars().all()
-    print(result)
     empleados = schema.dump(result)
     session.close()
     return jsonify(results = empleados)
@@ -26,15 +25,18 @@ def index_empleado():
 def get_empleado(empleado_id):
     schema = EmpleadoSchema()
     stmt = select(Empleado).where(Empleado.id == empleado_id)
-    result = session.execute(stmt).scalars().one()
-    empleado = schema.dump(result)  
-    session.close()
+    try:
+        result = session.execute(stmt).scalars().one()
+        empleado = schema.dump(result)  
+        session.close()
+    except:
+        return "No existe el ID"    
     return jsonify(empleado)
 
 @bp.route('/empleado',methods=['POST'])
 
 def post_empleado():
-    posted_empleado = EmpleadoSchema().load(request.get_json(),unknown=INCLUDE)
+    posted_empleado = EmpleadoSchema().load(request.get_json())
     empleado = Empleado(**posted_empleado)
     session.add(empleado)
     session.commit()
