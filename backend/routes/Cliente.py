@@ -1,6 +1,5 @@
 from flask import Blueprint,jsonify,request
 from sqlalchemy import select
-from sqlalchemy.orm import session
 from database.models.Cliente import Cliente
 from database.models.Mascota import Mascota
 from sqlalchemy.sql.expression import join
@@ -26,9 +25,12 @@ def index_cliente():
 def get_cliente(cliente_id):
     schema = ClienteSchema()
     stmt = select(Cliente).where(Cliente.id == cliente_id)
-    result = session.execute(stmt).scalars().one()
-    cliente = schema.dump(result)
-    session.close()
+    try:
+        result = session.execute(stmt).scalars().one()
+        cliente = schema.dump(result)
+        session.close()
+    except:    
+        return "NO EXISTE EL ID"
     return jsonify(cliente)
 
 @bp.route('/cliente',methods=['POST'])
@@ -47,11 +49,14 @@ def post_cliente():
 def delete_cliente(cliente_id):
     schema = ClienteSchema()
     stmt = select(Cliente).where(Cliente.id == cliente_id)
-    result = session.execute(stmt).scalars().one()
-    session.delete(result)
-    session.commit()
-    cliente = schema.dump(result)
-    session.close()
+    try:
+        result = session.execute(stmt).scalars().one()
+        session.delete(result)
+        session.commit()
+        cliente = schema.dump(result)
+        session.close()
+    except:
+        return "NO EXISTE EL CLIENTE"    
     return jsonify(cliente)
 
 @bp.route('/cliente/<int:cliente_id>/mascotas')
@@ -60,9 +65,12 @@ def getMascotas(cliente_id):
     schema = MascotaSchema(many=1)
     Join = join(Cliente,Mascota,Cliente.id == Mascota.id_propietario)
     stmt = select(Mascota).select_from(Join).where(Cliente.id == cliente_id)
-    result = session.execute(stmt).scalars().all()
-    mascotas = schema.dump(result)
-    session.close()
+    try:
+        result = session.execute(stmt).scalars().all()
+        mascotas = schema.dump(result)
+        session.close()
+    except:
+        return "NO EXISTE EL CLIENTE"    
     return  jsonify(results = mascotas)
 
 
