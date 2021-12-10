@@ -1,4 +1,4 @@
-from flask import Blueprint,request,jsonify
+from flask import Blueprint,request,jsonify,abort
 from sqlalchemy import select
 from database.db import Session
 from database.models.Producto import Producto
@@ -27,14 +27,30 @@ def index_procedimientos():
     session.close()
     return jsonify(results = productos)
 
-@bp.route('/producto/<int:producto_id>')
+@bp.route('/producto/<int:procdimiento_id>')
 
-def get_producto(producto_id):
+def get_producto(procdimiento_id):
     schema = ProductoSchema()
-    stmt = select(Producto).where(Producto.id == producto_id)
-    result = session.execute(stmt).scalars().one()
-    producto = schema.dump(result)
-    session.close()
+    stmt = select(Producto).where(Producto.id == procdimiento_id)
+    try:
+        result = session.execute(stmt).scalars().one()
+        producto = schema.dump(result)
+        session.close()
+    except:
+        return abort(404)    
+    return jsonify(producto)
+
+@bp.route('/procedimiento/<int:procdimiento_id>')
+
+def get_producto(procdimiento_id):
+    schema = ProductoSchema()
+    stmt = select(Producto).where(Producto.id == procdimiento_id).where(Producto.tipo == "procedimiento")
+    try:
+        result = session.execute(stmt).scalars().one()
+        producto = schema.dump(result)
+        session.close()
+    except:
+        return abort(404)    
     return jsonify(producto)
 
 @bp.route('/producto',methods=['POST'])
@@ -47,15 +63,18 @@ def post_producto():
     new_producto = ProductoSchema().dump(producto)
     return jsonify(new_producto),201
 
-@bp.route('/producto/delete/<int:producto_id>',methods=['DELETE'])
+@bp.route('/producto/delete/<int:procdimiento_id>',methods=['DELETE'])
 
-def delete_producto(producto_id):
+def delete_producto(procdimiento_id):
     schema = ProductoSchema()
-    stmt = select(Producto).where(Producto.id == producto_id)
-    result = session.execute(stmt).scalars().one()
-    session.delete(result)
-    session.commit()
-    producto = schema.dump(result)
-    session.close()
+    stmt = select(Producto).where(Producto.id == procdimiento_id)
+    try:
+        result = session.execute(stmt).scalars().one()
+        session.delete(result)
+        session.commit()
+        producto = schema.dump(result)
+        session.close()
+    except:
+        return abort(404)    
     return jsonify(producto)
 

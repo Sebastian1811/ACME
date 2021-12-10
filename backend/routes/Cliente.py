@@ -1,4 +1,4 @@
-from flask import Blueprint,jsonify,request
+from flask import Blueprint,jsonify,request,abort
 from sqlalchemy import select
 from database.models.Cliente import Cliente
 from database.models.Mascota import Mascota
@@ -30,7 +30,7 @@ def get_cliente(cliente_id):
         cliente = schema.dump(result)
         session.close()
     except:    
-        return "NO EXISTE EL ID"
+        return abort(404)
     return jsonify(cliente)
 
 @bp.route('/cliente',methods=['POST'])
@@ -56,7 +56,7 @@ def delete_cliente(cliente_id):
         cliente = schema.dump(result)
         session.close()
     except:
-        return "NO EXISTE EL CLIENTE"    
+        return abort(404)   
     return jsonify(cliente)
 
 @bp.route('/cliente/<int:cliente_id>/mascotas')
@@ -70,7 +70,7 @@ def getMascotas(cliente_id):
         mascotas = schema.dump(result)
         session.close()
     except:
-        return "NO EXISTE EL CLIENTE"    
+        return abort(404)    
     return  jsonify(results = mascotas)
 
 

@@ -1,5 +1,6 @@
-from flask import Blueprint,jsonify,request
+from flask import Blueprint,jsonify,request,abort 
 from sqlalchemy import select
+from werkzeug.wrappers import response
 from database.models.Empleado import Empleado
 from schemas.Empleado import EmpleadoSchema
 from marshmallow import INCLUDE
@@ -30,8 +31,8 @@ def get_empleado(empleado_id):
         empleado = schema.dump(result)  
         session.close()
     except:
-        return "No existe el ID"    
-    return jsonify(empleado)
+        return abort(404)   
+    return jsonify(empleado) 
 
 @bp.route('/empleado',methods=['POST'])
 
@@ -70,4 +71,4 @@ def login():
     if not check_password_hash(result.password,passw):
         return "Username o password incorrecta"    
 
-    return "SUCCESFULL"    
+    return "SUCCESFULL"

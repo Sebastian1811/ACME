@@ -34,8 +34,8 @@ def index_factura():
     except:
         return abort(404)        
             
-
     return "facturas"
+    
 @bp.route('/facturas')
 
 def facturas():
