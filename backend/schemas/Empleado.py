@@ -10,3 +10,4 @@ class EmpleadoSchema(Schema):
     id_tipo = fields.String()
     direccion = fields.String()
     ventasTotales = fields.Number()
+    role =  fields.String()
