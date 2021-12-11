@@ -82,7 +82,6 @@ def factura(factura_id):
     except:
         return abort(404)
     try:
-
         result = session.execute(stmt3).scalars().all()
         productos = schemaProducto.dump(result)
     except:
@@ -90,5 +89,27 @@ def factura(factura_id):
     session.close()
     return jsonify(facturas = facturas,detalles = detalles,productos =productos)
 
+@bp.route('/factura/delete/<int:id_factura>',methods=['DELETE'])
 
+def delete_factura(id_factura):
+    schemaFactura = FacturaSchema()
+    schemaDetalle = DetalleSchema(many=1)
+    stmt = select(Factura).where(Factura.id_factura==id_factura)
+    stmt2 = select(Detalle).where(Detalle.id_factura == id_factura)
+    try:
+        resultFactura = session.execute(stmt).scalars().one()
+        session.delete(resultFactura)
+        session.commit()
+        factura = schemaFactura.dump(resultFactura)
+    except:
+        return abort(404)    
     
+    try:
+        resultDetalle = session.execute(stmt2).scalars().all()
+        detalle = schemaDetalle.dump(resultDetalle)
+        for i in resultDetalle:
+            session.delete(i)
+            session.commit()
+    except:
+        return abort(404)
+    return jsonify(factura = factura,detalle = detalle)
