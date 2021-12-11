@@ -42,7 +42,7 @@ def get_producto(procdimiento_id):
 
 @bp.route('/procedimiento/<int:procdimiento_id>')
 
-def get_producto(procdimiento_id):
+def get_procedimiento(procdimiento_id):
     schema = ProductoSchema()
     stmt = select(Producto).where(Producto.id == procdimiento_id).where(Producto.tipo == "procedimiento")
     try:
