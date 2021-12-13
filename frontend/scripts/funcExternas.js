@@ -28,7 +28,7 @@ function formatoMillon(numero){
   string = numero.toString();
   let posPunto = string.length % 3;
   if(posPunto == 0){
-    string = string.substring(0, posPunto+3) + "." + string.substring(posPunto+3, string.length);
+    string = string.substring(0, posPunto+3) + "." + string.substring(posPunto+3, posPunto+6) + "." + string.substring(posPunto+6, string.length);
   }else{
     string = string.substring(0, posPunto) + "." + string.substring(posPunto, posPunto+3) + "." + string.substring(posPunto+3, string.length);
   }
