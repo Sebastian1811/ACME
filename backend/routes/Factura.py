@@ -33,7 +33,7 @@ def index_factura():
             session.commit()
         session.close()
     except:
-        return abort(404)        
+        return abort(404)     
             
     return "facturas"
 
@@ -87,7 +87,7 @@ def factura(factura_id):
     except:
         return abort(404)       
     session.close()
-    return jsonify(facturas = facturas,detalles = detalles,productos =productos)
+    return jsonify(factura = facturas,detalles = detalles,productos =productos)
 
 @bp.route('/factura/delete/<int:id_factura>',methods=['DELETE'])
 

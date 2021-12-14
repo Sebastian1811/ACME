@@ -71,4 +71,4 @@ def login():
     if not check_password_hash(result.password,passw):
         return "Username o password incorrecta"    
 
-    return "SUCCESFULL"
+    return jsonify(result='success')
