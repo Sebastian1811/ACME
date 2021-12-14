@@ -19,7 +19,6 @@ def index_factura():
     detalles = solicitud['detalles']
     try:
         postedfactura = FacturaSchema().load(solicitud)
-        print(postedfactura)
         factura = Factura(**postedfactura)
         session.add(factura)
         session.commit()
