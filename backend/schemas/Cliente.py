@@ -8,3 +8,4 @@ class ClienteSchema(Schema):
     id_tipo = fields.String()
     direccion = fields.String()
     email = fields.String()
+    ciudad = fields.String()
