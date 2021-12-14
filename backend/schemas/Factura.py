@@ -5,4 +5,5 @@ class FacturaSchema(Schema):
         unknown = EXCLUDE
     id_factura = fields.Number()
     id_cliente = fields.Number()
+    id_empleado = fields.Number()
     fecha = fields.DateTime()
