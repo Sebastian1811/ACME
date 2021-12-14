@@ -19,6 +19,7 @@ def index_factura():
     detalles = solicitud['detalles']
     try:
         postedfactura = FacturaSchema().load(solicitud)
+        print(postedfactura)
         factura = Factura(**postedfactura)
         session.add(factura)
         session.commit()
@@ -33,7 +34,7 @@ def index_factura():
             session.commit()
         session.close()
     except:
-        return "pifio detalles"    
+        return abort(404)   
             
     return jsonify(result="SUCCESS")
 
