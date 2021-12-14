@@ -48,11 +48,13 @@
 
           </div>
           <div class="col-sm-4">
-            <label>Ingrese la cédula de la persona a generar la factura</label>
-            <input type="text" name="numonly" maxlength="10" min="0" class="form-control" placeholder="" style="margin-top: 5px;" autocomplete="off">
-            <div class="col text-center">
-              <button type="button" class="btn btn-info" onclick="agregarDatos()" style="margin-top: 5px; width: 200px; font-weight: bold;">Verificar</button>
-            </div>
+            <form id="formVer">
+              <label for="cedula" class="form-label">Ingrese la cédula de la persona a generar la factura</label>
+              <input type="text" id="inpVerificar" name="Cedula" maxlength="10" min="0" class="form-control" placeholder="Ingrese el número de cédula" style="margin-top: 5px;" required>
+              <div class="col text-center">
+                <button type="submit" class="btn btn-info" id="verificar" style="margin-top: 5px; width: 200px; font-weight: bold;">Verificar</button>
+              </div>
+            </form>
           </div>
         </div>
 
@@ -87,8 +89,8 @@
                 <p style="text-align: right;">Condiciones de pago:</p>
               </div>
               <div class="col-sm-6">
-                <select id="selMet" class="form-control" style="text-align: right;" autocomplete="off">
-                  <option selected="" disabled="" value="">Escoger método</option>
+                <select id="selMet" class="form-control required" style="text-align: right;" autocomplete="off" disabled>
+                  <option selected="" disabled="disabled" value="">Escoger método</option>
                   <option>Efectivo</option>
                   <option>Tarjeta</option>
                 </select>
@@ -109,17 +111,17 @@
         <div class="row mb-4 justify-content-center" style="margin-top: -30px;">
           <div class="col-sm-4">
             <label style="text-align: center;">Seleccione el producto a añadir</label>
-            <select id="selPro" class="form-control" style="text-align: center; margin-top: 5px;" autocomplete="off">
+            <select id="selPro" class="form-control" style="text-align: center; margin-top: 5px;" autocomplete="off" disabled>
               <option selected="" disabled="" value="">Escoger producto</option>
             </select>
           </div>
           <div class="col-sm-4">
             <label>Ingrese la cantidad del producto</label>
-            <input type="number" id="cantidadProducto" name="quantity" min="1" maxlength="3" class="form-control" placeholder="Ingrese la cantidad del producto" style="margin-top: 5px;" autocomplete="off">
+            <input type="number" id="cantidadProducto" name="quantity" min="1" maxlength="3" class="form-control" placeholder="Ingrese la cantidad del producto" style="margin-top: 5px;" autocomplete="off" disabled>
           </div>
           <div class="row mb-4" style="margin-top: 5px;">
             <div class="col text-center">
-              <button type="button" class="btn btn-info" onclick="agregarProducto()" style="margin-top: 5px; width: 250px; font-weight: bold;">Agregar producto a la factura</button>
+              <button id="agregarProd" type="button" class="btn btn-info" onclick="agregarProducto()" style="margin-top: 5px; width: 250px; font-weight: bold;" disabled required>Agregar producto a la factura</button>
             </div>
           </div>
         </div>
@@ -166,13 +168,15 @@
           <div class="justify-content-right" style="margin-top: 20px; float: right;">
             <button type="submit" class="btn btn-secondary btn-block btn-default">Volver</button>
             <button type="submit" class="btn btn-warning btn-block btn-default" onclick="limpiarTabla()">Limpiar factura</button>
-            <button type="button" class="btn btn-primary btn-block btn-default" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" onclick="mostrarValorFacturaModal()">Generar factura</button>
+            <button id="genFactura" type="button" class="btn btn-primary btn-block btn-default" data-bs-toggle="modal" data-bs-target="#genFactModal" onclick="mostrarValorFacturaModal()" disabled>Generar factura</button>
           </div>
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter">
+    <!-- Modales -->
+
+    <!-- MODAL GENERANDO FACTURA -->
+    <div class="modal fade" id="genFactModal">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
@@ -196,11 +200,28 @@
       </div>
     </div>
 
+    <!-- MODAL CEDULA NO REGISTRADA -->
+    <div class="modal fade" id="cedNoRegModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Error</h5>
+          </div>
+          <div class="modal-body">
+            <p id="errorCedVer"></p>
+          </div>
+          <div class="modal-footer">
+            <p>Haga click por fuera del aviso para cerrarlo</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 
-  <script src="../scripts/funcExternas.js"></script>
-  <script src="../scripts/facturacion.js"></script>
+  <script src="./scripts/funcExternas.js"></script>
+  <script src="./scripts/facturacion.js"></script>
 
   </body>
 </html>
