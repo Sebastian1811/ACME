@@ -35,7 +35,7 @@ def index_factura():
     except:
         return abort(404)     
             
-    return "facturas"
+    return jsonify(result="SUCCESS")
 
 @bp.route('/facturas')
 
