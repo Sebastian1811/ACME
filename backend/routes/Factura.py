@@ -33,7 +33,7 @@ def index_factura():
             session.commit()
         session.close()
     except:
-        return abort(404)     
+        return "pifio detalles"    
             
     return jsonify(result="SUCCESS")
 
@@ -68,7 +68,7 @@ def factura(factura_id):
     Join2 = join(Detalle,Producto,Detalle.id_producto == Producto.id)
 
     stmt = select(Factura).where(Factura.id_factura==factura_id)
-    stmt2 = select(Detalle).select_from(Join)
+    stmt2 = select(Detalle).where(Detalle.id_factura == factura_id)
     stmt3 = select(Producto).select_from(Join2).where(Detalle.id_factura == factura_id)
     
     try:
