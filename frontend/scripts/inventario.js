@@ -67,7 +67,7 @@ function alerta(){
 
 // FETCHS
 
-fetch(API_URL + "/empleados")
+/*fetch(API_URL + "/empleados")
 .then(res => res.json())
 .then(data => Object.values(data)[0].forEach(empleado => (console.log(empleado.nombre + " " + empleado.apellido))))
-.catch(err => console.log(err));
+.catch(err => console.log(err));*/

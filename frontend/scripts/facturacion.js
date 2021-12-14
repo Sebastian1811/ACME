@@ -1,5 +1,47 @@
 var table = document.getElementById("myTable");
 
+let formVerificar = document.getElementById("formVer");
+formVerificar.addEventListener("submit", function(e){
+  e.preventDefault();
+  
+  var numCed = document.getElementById("inpVerificar").value;
+
+  let datos = new FormData(formVerificar);
+
+  fetch(API_URL + "/cliente/" + datos.get("Cedula"))
+  .then(res => res.json())
+  .then(data => {
+    var nombreCli = data.nombre + " " + data.apellido;
+    var cedulaCli = data.id;
+    var direccionCli = data.direccion;
+    var ciudadCli = "En algún lugar";
+
+    document.getElementById("nombreCliente").innerHTML = nombreCli;
+    document.getElementById("nombreCliente").style.fontWeight = "bold";
+    document.getElementById("cedulaCliente").innerHTML = "CC: " + cedulaCli;
+    document.getElementById("direccionCliente").innerHTML = direccionCli;
+    document.getElementById("direccionCliente").style.fontWeight = "bold";
+    document.getElementById("ciudadCliente").innerHTML = ciudadCli;
+
+    document.getElementById("selMet").disabled = false;
+    document.getElementById("selPro").disabled = false;
+    document.getElementById("cantidadProducto").disabled = false;
+    document.getElementById("agregarProd").disabled = false;
+    document.getElementById("genFactura").disabled = false;
+
+  })
+  .catch(err => {
+    //alert("El cliente con número de cédula " + numCed + " no se encuentra registrado en el sistema.");
+    var myModal = new bootstrap.Modal(document.getElementById("cedNoRegModal"));
+    document.getElementById("errorCedVer").innerHTML = "El cliente con número de cédula " + numCed + " no se encuentra registrado en el sistema."
+    myModal.show();
+  });
+});
+
+/*let x = document.getElementById("selMet").selectedIndex;
+    let y = document.getElementById("selMet").options;
+    console.log(y[x]);*/
+
 // DATOS PARA OBTENER LA FECHA DEL DÍA ACTUAL
 n =  new Date();
 y = n.getFullYear();
@@ -11,7 +53,7 @@ document.getElementById("eDate").innerHTML = d + "/" + m + "/" + y;
 document.getElementById("eDate").style.fontWeight = "bold";
 
 // Placeholders para la información del cliente
-var nombreCli = "Sebastian Andica";
+/*var nombreCli = "Sebastian Andica";
 var cedulaCli = "4145815165";
 var direccionCli = "Detrás de La 14 (¿Eso sigue existiendo?)";
 var ciudadCli = "En el centro del Valle";
@@ -21,7 +63,7 @@ document.getElementById("nombreCliente").style.fontWeight = "bold";
 document.getElementById("cedulaCliente").innerHTML = "CC: " + cedulaCli;
 document.getElementById("direccionCliente").innerHTML = direccionCli;
 document.getElementById("direccionCliente").style.fontWeight = "bold";
-document.getElementById("ciudadCliente").innerHTML = ciudadCli;
+document.getElementById("ciudadCliente").innerHTML = ciudadCli;*/
 
 // AGREGAR PRODUCTOS A LA LISTA DE PRODUCTOS A PAGAR
 let nombresProd = ["Consulta general", "Esterilización perros raza grande", "Esterilización perros raza pequeña", "Esterilización gatos", "Hemograma"];

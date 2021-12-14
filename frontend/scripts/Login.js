@@ -25,7 +25,11 @@ formulario.addEventListener('submit', function(e){
 
   }).then(res => res.json())
   .catch(error => console.error('Error:', error))
-  .then(response => console.log('Success:', response));
+  .then(response => {
+    console.log('Success:', response)
+    window.location.href = "hub.html";
+    location.reload();
+  });
 
 })
 
