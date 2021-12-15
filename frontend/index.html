@@ -37,8 +37,9 @@
                  <!--Login-->
                  <form id="formulario">
                    <div class="mb-4">
-                       <label for="Cedula" class="form-label">Cedula (Sin puntos)</label>
-                       <input id="Cedula" class = "form-control" name="Cedula" required>
+                       <label for="Cedula" class="form-label">Cedula</label>
+                       <input type="number" id="Cedula" class="form-control" name="Cedula" required>
+                       <small id="passwordHelpBlock" class="form-text text-muted">Ingrese el número de cédula sin puntos</small>
                    </div>
                    <div class="mb-4">
                     <label for="password" class="form-label">Contraseña</label>
@@ -63,7 +64,7 @@
                 <p id="errorDatosIncorrectos"></p>
               </div>
               <div class="modal-footer">
-                <p>Haga click por fuera del aviso para cerrarlo</p>
+                <small>Haga click por fuera del aviso para cerrarlo</small>
               </div>
             </div>
           </div>
