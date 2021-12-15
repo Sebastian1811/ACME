@@ -8,6 +8,8 @@ function formato(numero){
     return formatoMil(numero);
   }else if(numero < 1000000000){
     return formatoMillon(numero);
+  }else{
+    return formatoMilMillon(numero);
   }
 }
 
@@ -35,8 +37,20 @@ function formatoMillon(numero){
   return string;
 }
 
+// DAR FORMATO DE MIL
+function formatoMilMillon(numero){
+  string = numero.toString();
+  let posPunto = string.length % 3;
+  if(posPunto == 0){
+    string = string.substring(0, posPunto+3) + "." + string.substring(posPunto+3, posPunto+6) + "." + string.substring(posPunto+6, posPunto+9) + "." + string.substring(posPunto+9, string.length);
+  }else{
+    string = string.substring(0, posPunto) + "." + string.substring(posPunto, posPunto+3) + "." + string.substring(posPunto+3, posPunto+6) + "." + string.substring(posPunto+6, string.length);
+  }
+  return string;
+}
+
 // CONVIERTE EL STRING DE UN PRECIO A UN NUMERO ENTERO
-function limpiarPrecio(string){
+function limpiarNumero(string){
   let valor = string;
   valor = valor.slice(1);
   valor = valor.replace(",", "");

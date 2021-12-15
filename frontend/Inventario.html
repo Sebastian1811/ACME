@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <title>ACME | Inventario</title>
+    <title>ACME | Visualizar datos</title>
 
     <style>
       body {
@@ -33,39 +33,126 @@
 
   </head>
   <body>
-    <h1 class= "fw-bold text-center py-2">Inventario</h1>
-    <div class="container bg-white mt-5 rounded shadow" style="padding-top: 20px; margin-bottom: 50px;">
-      <div class="table-responsive">
-        <h3 class="fw-bold text-center">Inventario</h3>
-        <div class="justify-content-center" style="float: left; margin-bottom: 20px; margin-left: 20px;">
+    <div class="container bg-white mt-5 rounded shadow overflow-auto" style="padding-top: 20px; margin-bottom: 50px; max-width: 95%;">
+      <div class="row">
+        <div class="col-sm-4" style="margin-left: 20px;">
           <button type="button" class="btn btn-secondary btn-block btn-default" onclick="location.href='hub.html'">Volver</button>
         </div>
-        <div class="justify-content-center" style="float: right; margin-bottom: 20px; margin-right: 20px;">
-          <button type="button" class="btn btn-primary btn-block btn-default" data-bs-toggle="modal" data-bs-target="#agregarProdModal">Registrar producto</button>
+      </div>
+      <div class="table-responsive">
+        <nav style="margin-left: 20px; margin-top: 20px;">
+            <div class="nav nav-pills" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-productos" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Productos/Procedimientos</button>
+                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-clientes" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Clientes</button>
+                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-mascotas" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Mascotas</button>
+                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-empleados" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Empleados</button>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-productos" role="tabpanel" aria-labelledby="nav-home-tab">
+              <h3 class="fw-bold text-center" style="margin-top: 20px;">Inventario</h3>
+              <div class="justify-content-center" style="float: right; margin-bottom: 20px; margin-right: 20px;">
+                <button type="button" class="btn btn-primary btn-block btn-default" data-bs-toggle="modal" data-bs-target="#agregarProdModal">Registrar producto</button>
+              </div>
+              <div class="card-body">
+                <div class="panel-heading">
+                  <div class="table-responsive-sm table-primary">
+                    <table class="table table-striped border-dark" id="tableProductos">
+                      <thead> 
+                        <tr>
+                          <th>ID</th>
+                          <th>Nombre</th>
+                          <th>Precio</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody id="bodyProds">
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="nav-clientes" role="tabpanel" aria-labelledby="nav-profile-tab">
+              <h3 class="fw-bold text-center" style="margin-top: 20px;">Clientes</h3>
+              <div class="card-body">
+                <div class="panel-heading">
+                  <div class="table-responsive-sm table-primary">
+                    <table class="table table-striped border-dark" id="tableClientes">
+                      <thead> 
+                        <tr>
+                          <th>Cédula</th>
+                          <th>Nombres</th>
+                          <th>Apellidos</th>
+                          <th>Telefono</th>
+                          <th>Dirección</th>
+                          <th>Ciudad</th>
+                          <th>Correo electrónico</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody id="bodyClientes">
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="nav-mascotas" role="tabpanel" aria-labelledby="nav-contact-tab">
+              <h3 class="fw-bold text-center" style="margin-top: 20px;">Mascotas</h3>
+              <div class="card-body">
+                <div class="panel-heading">
+                  <div class="table-responsive-sm table-primary">
+                    <table class="table table-striped border-dark" id="tableMascotas">
+                      <thead> 
+                        <tr>
+                          <th>ID</th>
+                          <th>Nombre</th>
+                          <th>Cédula dueño</th>
+                          <th>Tipo</th>
+                          <th>Raza</th>
+                          <th>Fecha nacimiento (D/M/A)</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody id="bodyMascotas">
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="nav-empleados" role="tabpanel" aria-labelledby="nav-contact-tab">
+              <h3 class="fw-bold text-center" style="margin-top: 20px;">Empleados</h3>
+              <div class="card-body">
+                <div class="panel-heading">
+                  <div class="table-responsive-sm table-primary">
+                    <table class="table table-striped border-dark" id="tableEmpleados">
+                      <thead> 
+                        <tr>
+                          <th>ID</th>
+                          <th>Nombres</th>
+                          <th>Apellidos</th>
+                          <th>Telefono</th>
+                          <th>Dirección</th>
+                          <th>Rol</th>
+                          <th>Ventas totales</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody id="bodyEmpleados">
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
-        <div class="card-body">
-          <div class="table-responsive-sm table-primary">
-            <table class="table table-striped border-dark" id="myTable">
-              <thead> 
-                <tr>
-                  <th>ID</th>
-                  <th>Nombre</th>
-                  <th>Precio</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="align-middle">
-                  <td>1</td>
-                  <td>Canivex</td>
-                  <td>15000</td>
-                  <td class="justify-content-center">
-                    <button type="button" class="btn btn-warning">Modificar</button>
-                    <button type="button" class="btn btn-danger">Eliminar</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+        
           </div>
         </div>
       </div>
@@ -74,17 +161,15 @@
 
 
     <!-- MODALES -->
+
+    <!-- MODAL PARA AGREGAR PRODUCTOS -->
     <div class="modal fade" id="agregarProdModal">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-
-          <!-- Modal Header -->
           <div class="modal-header">
             <h5 class="modal-title" id="staticBackdropLabel"><strong>Agregar producto</strong></h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-
-          <!-- Modal body -->
           <div class="modal-body" id="divConfFact">
             <div class="col form-group">
               <label>Nombre</label>
@@ -95,8 +180,6 @@
               <input type="text" id="precioAg" class="form-control" placeholder="Ingrese el precio del producto" autocomplete="off">
             </div>
           </div>
-
-          <!-- Modal footer -->
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
             <button type="button" class="btn btn-primary" onclick="agregarProducto()" data-bs-dismiss="modal">Agregar</button>
@@ -105,33 +188,141 @@
       </div>
     </div>
 
-    <!-- MODAL PARA MODIFICAR VALORES -->
+    <!-- MODAL PARA MODIFICAR PRODUCTOS -->
     <div class="modal fade" id="modProdModal">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-
-          <!-- Modal Header -->
           <div class="modal-header">
             <h5 class="modal-title" id="staticBackdropLabel"><strong>Modificar producto</strong></h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-
-          <!-- Modal body -->
           <div class="modal-body" id="divConfFact">
             <div class="col form-group">
               <label>Nombre</label>
-              <input type="text" id="nombreMod" class="form-control" placeholder="Ingrese el nuevo nombre del producto" autocomplete="off">
+              <input type="text" id="nombreProdMod" class="form-control" placeholder="Ingrese el nuevo nombre del producto" autocomplete="off">
             </div>
             <div class="col form-group mgt">
               <label>Precio</label>   
-              <input type="text" id="precioMod" class="form-control" placeholder="Ingrese el nuevo precio del producto" autocomplete="off">
+              <input type="text" id="precioProdMod" class="form-control" placeholder="Ingrese el nuevo precio del producto" autocomplete="off">
             </div>
           </div>
-
-          <!-- Modal footer -->
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
-            <button type="button" class="btn btn-primary" onclick="modInfo()" data-bs-dismiss="modal">Agregar</button>
+            <button type="button" class="btn btn-primary" onclick="modProd()" data-bs-dismiss="modal">Actualizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL PARA MODIFICAR CLIENTES -->
+    <div class="modal fade" id="modClienteModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel"><strong>Modificar cliente</strong></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="divConfFact">
+            <div class="col form-group">
+              <label>Nombre</label>
+              <input type="text" id="nombreClientesMod" class="form-control" placeholder="Ingrese el nuevo nombre del cliente" autocomplete="off">
+            </div>
+            <div class="col form-group mgt">
+              <label>Apellidos</label>   
+              <input type="text" id="apellidosClientesMod" class="form-control" placeholder="Ingrese el nuevo apellido del cliente" autocomplete="off">
+            </div>
+            <div class="col form-group mgt">
+              <label>Telefono</label>   
+              <input type="text" id="telefonoClientesMod" class="form-control" placeholder="Ingrese el nuevo telefono del cliente" autocomplete="off">
+            </div>
+            <div class="col form-group mgt">
+              <label>Dirección</label>   
+              <input type="text" id="direccionClientesMod" class="form-control" placeholder="Ingrese el nuevo dirección del cliente" autocomplete="off">
+            </div>
+            <div class="col form-group mgt">
+              <label>Ciudad</label>   
+              <input type="text" id="ciudadClientesMod" class="form-control" placeholder="Ingrese el nuevo ciudad del cliente" autocomplete="off">
+            </div>
+            <div class="col form-group mgt">
+              <label>Correo electrónico</label>   
+              <input type="text" id="correoClientesMod" class="form-control" placeholder="Ingrese el nuevo correo electrónico del cliente" autocomplete="off">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+            <button type="button" class="btn btn-primary" onclick="modClientes()" data-bs-dismiss="modal">Actualizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL PARA MODIFICAR MASCOTAS -->
+    <div class="modal fade" id="modMascotasModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel"><strong>Modificar mascota</strong></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="divConfFact">
+            <div class="col form-group">
+              <label>Nombre</label>
+              <input type="text" id="nombreMascotasMod" class="form-control" placeholder="Ingrese el nuevo nombre de la mascota" autocomplete="off">
+            </div>
+            <div class="col form-group mgt">
+              <label>Cédula dueño</label>   
+              <input type="text" id="cedDueñoMascotasMod" class="form-control" placeholder="Ingrese la nueva cédula del dueño de la mascota" autocomplete="off">
+            </div>
+            <div class="col form-group mgt">
+              <label>Tipo</label>   
+              <input type="text" id="tipoMascotasMod" class="form-control" placeholder="Ingrese el nuevo tipo de la mascota" autocomplete="off">
+            </div>
+            <div class="col form-group mgt">
+              <label>Raza</label>   
+              <input type="text" id="razaMascotasMod" class="form-control" placeholder="Ingrese la nueva raza de la mascota" autocomplete="off">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+            <button type="button" class="btn btn-primary" onclick="modMascotas()" data-bs-dismiss="modal">Actualizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL PARA MODIFICAR EMPLEADOS -->
+    <div class="modal fade" id="modEmpleadosModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel"><strong>Modificar empleado</strong></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="divConfFact">
+            <div class="col form-group mgt">
+              <label>Nombre</label>   
+              <input type="text" id="nombreEmpleadosMod" class="form-control" placeholder="Ingrese el nuevo nombre del empleado" autocomplete="off">
+            </div>
+            <div class="col form-group mgt">
+              <label>Apellido</label>   
+              <input type="text" id="apellidoEmpleadosMod" class="form-control" placeholder="Ingrese el nuevo apellido del empleado" autocomplete="off">
+            </div>
+            <div class="col form-group mgt">
+              <label>Teléfono</label>   
+              <input type="text" id="telefonoEmpleadosMod" class="form-control" placeholder="Ingrese el nuevo teléfono del empleado" autocomplete="off">
+            </div>
+            <div class="col form-group mgt">
+              <label>Dirección</label>   
+              <input type="text" id="direccionEmpleadosMod" class="form-control" placeholder="Ingrese la nueva dirección del empleado" autocomplete="off">
+            </div>
+            <!-- <div class="col form-group mgt">
+              <label>Rol</label>   
+              <input type="text" id="rolProdMod" class="form-control" placeholder="Ingrese el nuevo precio del empleado" autocomplete="off">
+            </div> -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+            <button type="button" class="btn btn-primary" onclick="modEmpleado()" data-bs-dismiss="modal">Actualizar</button>
           </div>
         </div>
       </div>
