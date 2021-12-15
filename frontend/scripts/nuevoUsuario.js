@@ -2,7 +2,7 @@ function mostrarDatos(){
   var name = document.getElementById("nombres").value;
   var surname = document.getElementById("apellidos").value;
   var nombreCompleto = name + " " + surname;
-  var id = document.getElementById("cedula").value;
+  var id = formato(parseInt(document.getElementById("cedula").value));
   var x = document.getElementById("cargo").selectedIndex;
   var y = document.getElementById("cargo").options;
   document.getElementById("modalNombres").innerHTML = nombreCompleto;
