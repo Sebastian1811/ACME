@@ -14,7 +14,7 @@ formVerificar.addEventListener("submit", function(e){
     var nombreCli = data.nombre + " " + data.apellido;
     var cedulaCli = data.id;
     var direccionCli = data.direccion;
-    var ciudadCli = "En algún lugar";
+    var ciudadCli = data.ciudad;
 
     document.getElementById("nombreCliente").innerHTML = nombreCli;
     document.getElementById("nombreCliente").style.fontWeight = "bold";
@@ -31,19 +31,14 @@ formVerificar.addEventListener("submit", function(e){
 
   })
   .catch(err => {
-    //alert("El cliente con número de cédula " + numCed + " no se encuentra registrado en el sistema.");
     var myModal = new bootstrap.Modal(document.getElementById("cedNoRegModal"));
     document.getElementById("errorCedVer").innerHTML = "El cliente con número de cédula " + numCed + " no se encuentra registrado en el sistema."
     myModal.show();
-  });
+  })
 });
 
-/*let x = document.getElementById("selMet").selectedIndex;
-    let y = document.getElementById("selMet").options;
-    console.log(y[x]);*/
-
 // DATOS PARA OBTENER LA FECHA DEL DÍA ACTUAL
-n =  new Date();
+n = new Date();
 y = n.getFullYear();
 m = n.getMonth() + 1;
 d = n.getDate();
@@ -51,19 +46,6 @@ document.getElementById("tDate").innerHTML = d + "/" + m + "/" + y;
 document.getElementById("tDate").style.fontWeight = "bold";
 document.getElementById("eDate").innerHTML = d + "/" + m + "/" + y; 
 document.getElementById("eDate").style.fontWeight = "bold";
-
-// Placeholders para la información del cliente
-/*var nombreCli = "Sebastian Andica";
-var cedulaCli = "4145815165";
-var direccionCli = "Detrás de La 14 (¿Eso sigue existiendo?)";
-var ciudadCli = "En el centro del Valle";
-
-document.getElementById("nombreCliente").innerHTML = nombreCli;
-document.getElementById("nombreCliente").style.fontWeight = "bold";
-document.getElementById("cedulaCliente").innerHTML = "CC: " + cedulaCli;
-document.getElementById("direccionCliente").innerHTML = direccionCli;
-document.getElementById("direccionCliente").style.fontWeight = "bold";
-document.getElementById("ciudadCliente").innerHTML = ciudadCli;*/
 
 // AGREGAR PRODUCTOS A LA LISTA DE PRODUCTOS A PAGAR
 let nombresProd = ["Consulta general", "Esterilización perros raza grande", "Esterilización perros raza pequeña", "Esterilización gatos", "Hemograma"];
@@ -81,7 +63,7 @@ document.getElementById("valTot").innerHTML = "$0,00";
 function suma(filas){
   let impTotal = "";
   let precio = table.rows[filas].cells[3].innerHTML;
-  let valor = limpiarPrecio(precio);
+  let valor = limpiarNumero(precio);
   valorTotalFac += valor;
   
   impTotal = formato(valorTotalFac);
