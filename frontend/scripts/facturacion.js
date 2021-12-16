@@ -38,10 +38,10 @@ formVerificar.addEventListener("submit", function(e){
 });
 
 // DATOS PARA OBTENER LA FECHA DEL DÍA ACTUAL
-n = new Date();
-y = n.getFullYear();
-m = n.getMonth() + 1;
-d = n.getDate();
+let n = new Date();
+let y = n.getFullYear();
+let m = n.getMonth() + 1;
+let d = n.getDate();
 document.getElementById("tDate").innerHTML = d + "/" + m + "/" + y; 
 document.getElementById("tDate").style.fontWeight = "bold";
 document.getElementById("eDate").innerHTML = d + "/" + m + "/" + y; 
@@ -50,7 +50,7 @@ document.getElementById("eDate").style.fontWeight = "bold";
 // AGREGAR PRODUCTOS A LA LISTA DE PRODUCTOS A PAGAR
 let nombresProd = ["Consulta general", "Esterilización perros raza grande", "Esterilización perros raza pequeña", "Esterilización gatos", "Hemograma"];
 let valorProd = [15000, 300000, 320000, 320000, 20000];
-var optProd = document.getElementById("selPro");
+let optProd = document.getElementById("selPro");
 for(let i=0; i<nombresProd.length; i++){
   let option = document.createElement("option");
   option.text = nombresProd[i] + " | $" + valorProd[i].toString();
