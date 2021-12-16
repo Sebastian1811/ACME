@@ -48,31 +48,33 @@
                     <div class="form-row">
                       <div class="col form-group">
                         <label>ID</label>
-                        <input type="text" id="id" name="numonly" maxlength="6" min="0" class="form-control" placeholder="Ingrese el ID de la nueva mascota" autocomplete="off" required>
+                        <input type="text" id="id" name="id" maxlength="6" min="0" class="form-control" autocomplete="off" readonly>
                       </div>
                       <div class="col form-group mgt">
-                        <label>Cédula Propietario</label>   
-                        <input type="text" id="cedProp" class="form-control" placeholder="Ingrese la cédula del dueño" autocomplete="off" required>
+                        <label>Cédula del dueño</label>   
+                        <input type="text" id="cedDueño" name="cedDueño" maxlength="10" minlength="8" class="form-control" placeholder="Ingrese la cédula del dueño" autocomplete="off" required>
+                        <small>Ingrese el número de cédula sin puntos</small>
                       </div>
                       <div class="col form-group mgt">
                         <label>Nombre</label>
-                        <input type="text" id="nombre" class="form-control" placeholder="Ingrese el nombre completo de la mascota" autocomplete="off" required>
+                        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese el nombre completo de la mascota" autocomplete="off" required>
                       </div>
                       <div class="col form-group mgt">
                         <label>Tipo</label>
-                        <input type="text" id="tipo" name="numonly" maxlength="10" min="0" class="form-control" placeholder="Ingrese el tipo de mascota" autocomplete="off" required>
+                        <input type="text" id="tipo" name="tipo" maxlength="10" min="0" class="form-control" placeholder="Ingrese el tipo de mascota" autocomplete="off" required>
                       </div>
                       <div class="form-group mgt">
                         <label>Raza</label>
-                        <input type="text" id="raza" class="form-control" placeholder="Ingrese la raza de la mascota" autocomplete="off" required>
+                        <input type="text" id="raza" name="raza" class="form-control" placeholder="Ingrese la raza de la mascota" autocomplete="off" required>
                       </div>
                       <div class="form-group mgt">
                         <label>Fecha de nacimiento</label>
-                        <input type="text" id="direccion" class="form-control" placeholder="Ingrese fecha de nacimiento de la mascota" autocomplete="off" required>
+                        <input type="date" id="nacimiento" name="nacimiento" min="1980-01-01" class="form-control data-picker" data-date-format="mm/dd/yyyy" placeholder="Ingrese fecha de nacimiento de la mascota" autocomplete="off" required>
                       </div>
-                      <div class="justify-content-center" style="margin-top: 20px; float: right;">
+                      <small>El formato de la fecha es "Dia/Mes/Año"</small>
+                      <div class="justify-content-center" style="margin-top: 25px; float: right;">
                         <button type="button" class="btn btn-secondary btn-block btn-default" onclick="location.href='hub.html'">Volver</button>
-                        <button type="button" class="btn btn-primary btn-block btn-default" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" onclick="mostrarDatos()">Registrar</button>
+                        <button type="submit" id="btnRegistrar" class="btn btn-primary btn-block btn-default" onclick="mostrarDatos()">Registrar</button>
                       </div>
                     </div>
                   </form>
@@ -84,29 +86,40 @@
       </div>
     </div> 
 
-    <!-- Modal confirmación -->
-    <div class="modal fade" id="exampleModalCenter">
+    <!-- MODAL CONFIRMACION MASCOTAS -->
+    <div class="modal fade" id="mascotasModalCenter">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-
-          <!-- Modal Header -->
           <div class="modal-header">
             <h5 class="modal-title" id="staticBackdropLabel">Usted está registrando a:</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-
-          <!-- Modal body -->
           <div class="modal-body" id="divConfFact">
-            <p><strong>Nombre completo: </strong><label id="modalNombres"></label></p>
-            <p><strong>Cédula: </strong><label id="modalCedula"></label></p>
-            <p><strong>Cargo: </strong><label id="modalCargo"></label></p>
+            <p><strong>Nombre de la mascota: </strong><label id="modalNombreMascota"></label></p>
+            <p><strong>Cédula del dueño: </strong><label id="modalCedulaDueño"></label></p>
             <p>¿Está seguro que los datos están correctos?</p>
           </div>
-
-          <!-- Modal footer -->
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="agregarMascota()">Aceptar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL ERROR CÉDULA NO ENCONTRADA -->
+    <div class="modal fade" id="cedNoEncontradaModalCenter">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Error</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="divConfFact">
+            <p>El número de cédula del dueño no está registrada en el sistema</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
           </div>
         </div>
       </div>
