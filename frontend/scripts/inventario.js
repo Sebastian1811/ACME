@@ -17,7 +17,10 @@ fetch(API_URL + "/productos")
 // CONSEGUIR DATOS CLIENTES
 fetch(API_URL + "/clientes")
 .then(res => res.json())
-.then(data => Object.values(data)[0].forEach(clientes => {
+.then(data => { 
+  let arrayClientes = Object.values(data)[0];
+  arrayClientes.sort(GetSortOrder("id"));
+  arrayClientes.forEach(clientes => {
   let id = clientes.id;
   let nombre = clientes.nombre;
   let apellido = clientes.apellido;
@@ -26,13 +29,16 @@ fetch(API_URL + "/clientes")
   let ciudad = clientes.ciudad;
   let correo = clientes.email;
   agregarCliente(id, nombre, apellido, telefono, direccion, ciudad, correo);
-}))
+})})
 .catch(err => console.log(err))
 
 // CONSEGUIR DATOS MASCOTAS
 fetch(API_URL + "/mascotas")
 .then(res => res.json())
-.then(data => Object.values(data)[0].forEach(mascotas => {
+.then(data => {
+  let arrayMascotas = Object.values(data)[0];
+  arrayMascotas.sort(GetSortOrder("id"));
+  arrayMascotas.forEach(mascotas => {
   let id = mascotas.id;
   let id_prop = mascotas.id_propietario;
   let nombre = mascotas.nombre;
@@ -44,7 +50,7 @@ fetch(API_URL + "/mascotas")
   let año = fecha.getFullYear();
   let fecha_nac = dia + "/" + mes + "/" + año; 
   agregarMascota(id, id_prop, nombre, tipo, raza, fecha_nac);
-})) 
+})})
 .catch(err => console.log(err))
 
 // CONSEGUIR DATOS EMPLEADOS
@@ -133,7 +139,7 @@ function agregarCliente(id, nombre, apellido, telefono, direccion, ciudad, corre
   let cell6 = row.insertCell(5);
   let cell7 = row.insertCell(6);
   let cell8 = row.insertCell(7);
-  cell1.innerHTML = id;
+  cell1.innerHTML = formato(id);
   cell2.innerHTML = nombre;
   cell3.innerHTML = apellido;
   cell4.innerHTML = telefono;
@@ -213,7 +219,7 @@ function agregarMascota(id, id_prop, nombre, tipo, raza, fecha){
   let cell7 = row.insertCell(6);
   cell1.innerHTML = id;
   cell2.innerHTML = nombre;
-  cell3.innerHTML = id_prop;
+  cell3.innerHTML = formato(id_prop);
   cell4.innerHTML = tipo;
   cell5.innerHTML = raza;
   cell6.innerHTML = fecha;
@@ -280,7 +286,7 @@ function agregarEmpleado(id, nombre, apellido, telefono, direccion, role, ventas
   let cell6 = row.insertCell(5);
   let cell7 = row.insertCell(6);
   let cell8 = row.insertCell(7);
-  cell1.innerHTML = id;
+  cell1.innerHTML = formato(id);
   cell2.innerHTML = nombre;
   cell3.innerHTML = apellido
   cell4.innerHTML = telefono;

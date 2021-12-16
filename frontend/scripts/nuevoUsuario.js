@@ -1,4 +1,4 @@
-let botonRegistrar = document.getElementById("btnRegistar");
+let botonRegistrar = document.getElementById("btnRegistrar");
 let formulario = document.getElementById("formEmpleado");
 let botonConfirmar = document.getElementById("agregarEmpleado");
 
@@ -11,18 +11,27 @@ function mostrarDatos(){
   formulario.addEventListener("submit", function(e){
     e.preventDefault();
 
-    var myModal = new bootstrap.Modal(document.getElementById("empleadoModalCenter"));
-    myModal.show();
+    let tamCed = ("" + parseInt(document.getElementById("cedula").value)).length;
+    let tamTel = ("" + parseInt(document.getElementById("telefono").value)).length;
 
-    var name = document.getElementById("nombres").value;
-    var surname = document.getElementById("apellidos").value;
-    var nombreCompleto = name + " " + surname;
-    var id = formato(parseInt(document.getElementById("cedula").value));
-    var x = document.getElementById("cargo").selectedIndex;
-    var y = document.getElementById("cargo").options;
-    document.getElementById("modalNombres").innerHTML = nombreCompleto;
-    document.getElementById("modalCedula").innerHTML = id;
-    document.getElementById("modalCargo").innerHTML = y[x].text;
+    if(tamCed < 8){
+      alert("El número de cédula no es válido");
+    }else if(tamTel < 10){
+      alert("El número de teléfono no es válido");
+    }else{
+      var myModal = new bootstrap.Modal(document.getElementById("empleadoModalCenter"));
+      myModal.show();
+
+      var name = document.getElementById("nombres").value;
+      var surname = document.getElementById("apellidos").value;
+      var nombreCompleto = name + " " + surname;
+      var id = formato(parseInt(document.getElementById("cedula").value));
+      var x = document.getElementById("cargo").selectedIndex;
+      var y = document.getElementById("cargo").options;
+      document.getElementById("modalNombres").innerHTML = nombreCompleto;
+      document.getElementById("modalCedula").innerHTML = id;
+      document.getElementById("modalCargo").innerHTML = y[x].text;
+    }    
   })
 }
 
@@ -36,7 +45,7 @@ function agregarEmpleado(){
     id_tipo: "CC",
     nombre: datos.get("nombres"),
     role: datos.get("cargo"),
-    telefono: datos.get("telefono"),
+    telefono: Str(datos.get("telefono")),
     password: datos.get("nombres"),
     ventasTotales: 0.0
   };

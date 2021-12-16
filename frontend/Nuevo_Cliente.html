@@ -48,35 +48,35 @@
                     <div class="form-row">
                       <div class="col form-group">
                         <label>Cédula</label>
-                        <input type="text" id="cedula" name="numonly" maxlength="10" minlength="8" class="form-control" placeholder="Ingrese el número de cédula" autocomplete="off" required>
+                        <input type="text" id="cedula" name="cedula" maxlength="10" minlength="8" class="form-control" placeholder="Ingrese el número de cédula" autocomplete="off" required>
                       </div>
                       <div class="col form-group mgt">
                         <label>Nombres</label>   
-                        <input type="text" id="nombres" class="form-control" placeholder="Ingrese los nombres" autocomplete="off" required>
+                        <input type="text" id="nombres" name="nombres" class="form-control" placeholder="Ingrese los nombres" autocomplete="off" required>
                       </div>
                       <div class="col form-group mgt">
                         <label>Apellidos</label>
-                        <input type="text" id="apellidos" class="form-control" placeholder="Ingrese los apellidos" autocomplete="off" required>
+                        <input type="text" id="apellidos" name="apellidos" class="form-control" placeholder="Ingrese los apellidos" autocomplete="off" required>
                       </div>
                       <div class="col form-group mgt">
                         <label>Teléfono</label>
-                        <input type="text" id="telefono" name="numonly" maxlength="10" minlength="10" class="form-control" placeholder="Ingrese el número telefónico" autocomplete="off" required>
+                        <input type="text" id="telefono" name="telefono" maxlength="10" minlength="8" class="form-control" placeholder="Ingrese el número de teléfono" autocomplete="off" required>
                       </div>
                       <div class="form-group mgt">
                         <label>Correo electrónico</label>
-                        <input type="email" id="email" class="form-control" placeholder="Ingrese la dirección de correo electrónico" autocomplete="off" required>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Ingrese la dirección de correo electrónico" autocomplete="off" required>
                       </div>
                       <div class="form-group mgt">
                         <label>Dirección</label>
-                        <input type="text" id="direccion" class="form-control" placeholder="Ingrese la dirección del cliente" autocomplete="off" required>
+                        <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Ingrese la dirección del cliente" autocomplete="off" required>
                       </div>
                       <div class="form-group mgt">
                         <label>Ciudad</label>
-                        <input type="text" id="ciudad" class="form-control" placeholder="Ingrese la ciudad de residencia" autocomplete="off" required>
+                        <input type="text" id="ciudad" name="ciudad" class="form-control" placeholder="Ingrese la ciudad de residencia del cliente" autocomplete="off" required>
                       </div>
                       <div class="justify-content-center" style="margin-top: 20px; float: right;">
                         <button type="button" class="btn btn-secondary btn-block btn-default" onclick="location.href='hub.html'">Volver</button>
-                        <button type="button" class="btn btn-primary btn-block btn-default" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" onclick="mostrarDatos()">Registrar</button>
+                        <button type="button" id="btnRegistrar" class="btn btn-primary btn-block btn-default">Registrar</button>
                       </div>
                     </div>
                   </form>
@@ -88,29 +88,22 @@
       </div>
     </div> 
 
-    <!-- Modal confirmación -->
-    <div class="modal fade" id="exampleModalCenter">
+    <!-- MODAL CONFIRMACION CLIENTES -->
+    <div class="modal fade" id="clientesModalCenter">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-
-          <!-- Modal Header -->
           <div class="modal-header">
             <h5 class="modal-title" id="staticBackdropLabel">Usted está registrando a:</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-
-          <!-- Modal body -->
           <div class="modal-body" id="divConfFact">
             <p><strong>Nombre completo: </strong><label id="modalNombres"></label></p>
             <p><strong>Cédula: </strong><label id="modalCedula"></label></p>
-            
             <p>¿Está seguro que los datos están correctos?</p>
           </div>
-
-          <!-- Modal footer -->
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+            <button type="button" id="agregarCliente" class="btn btn-primary" data-bs-dismiss="modal" onclick="agregarCliente()">Aceptar</button>
           </div>
         </div>
       </div>
