@@ -1,12 +1,7 @@
-let botonRegistrar = document.getElementById("btnRegistrar");
+
 let formulario = document.getElementById("formEmpleado");
-let botonConfirmar = document.getElementById("agregarEmpleado");
 
-botonRegistrar.addEventListener("click", function(e){
-  botonRegistrar.setAttribute("type", "submit");
-  mostrarDatos();
-})
-
+// SE MUESTRAN LOS DATOS EN UN MODAL PARA CONFIRMAR
 function mostrarDatos(){
   formulario.addEventListener("submit", function(e){
     e.preventDefault();
@@ -35,6 +30,7 @@ function mostrarDatos(){
   })
 }
 
+// SE AGREGAN LOS DATOS DE EMPLEADO A LA BASE DE DATOS
 function agregarEmpleado(){
   
   var datos = new FormData(formulario);
@@ -45,7 +41,7 @@ function agregarEmpleado(){
     id_tipo: "CC",
     nombre: datos.get("nombres"),
     role: datos.get("cargo"),
-    telefono: Str(datos.get("telefono")),
+    telefono: datos.get("telefono"),
     password: datos.get("nombres"),
     ventasTotales: 0.0
   };
@@ -59,7 +55,6 @@ function agregarEmpleado(){
 
   }).then(res => res.json())
   .then(response => {
-    console.log("Success", response)
     document.getElementById("cedula").value = "";
     document.getElementById("nombres").value = "";
     document.getElementById("apellidos").value = "";
@@ -67,5 +62,5 @@ function agregarEmpleado(){
     document.getElementById("direccion").value = "";
     document.getElementById("cargo").selectedIndex = 0;
   })
-  .catch(err => console.log(erro))
+  .catch(err => console.log(err))
 }

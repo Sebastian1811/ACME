@@ -1,12 +1,6 @@
-let botonRegistrar = document.getElementById("btnRegistrar");
 let formulario = document.getElementById("formCliente");
-let botonConfirmar = document.getElementById("agregarCliente");
 
-botonRegistrar.addEventListener("click", function(e){
-  botonRegistrar.setAttribute("type", "submit");
-  mostrarDatos();
-})
-
+// SE MUESTRAN LOS DATOS EN UN MODAL PARA CONFIRMAR
 function mostrarDatos(){
   formulario.addEventListener("submit", function(e){
     e.preventDefault();
@@ -32,6 +26,7 @@ function mostrarDatos(){
   })
 }
 
+// SE AGREGAN LOS DATOS DE CLIENTE A LA BASE DE DATOS
 function agregarCliente(){
   
   var datos = new FormData(formulario);
@@ -55,7 +50,6 @@ function agregarCliente(){
 
   }).then(res => res.json())
   .then(response => {
-    console.log("Success", response)
     document.getElementById("cedula").value = "";
     document.getElementById("nombres").value = "";
     document.getElementById("apellidos").value = "";
