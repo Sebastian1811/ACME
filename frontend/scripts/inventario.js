@@ -4,69 +4,77 @@ var tableMascotas = document.getElementById("bodyMascotas");
 var tableEmpleados = document.getElementById("bodyEmpleados");
 
 // CONSEGUIR DATOS PRODUCTOS
-fetch(API_URL + "/productos")
-.then(res => res.json())
-.then(data => Object.values(data)[0].forEach(productos => {
-  let id = productos.id;
-  let nombre = productos.nombre;
-  let precio = productos.precio;
-  agregarProducto(id, nombre, precio);
-}))
-.catch(err => console.log(err))
+function getProductos(){
+  fetch(API_URL + "/productos")
+  .then(res => res.json())
+  .then(data => Object.values(data)[0].forEach(productos => {
+    let id = productos.id;
+    let nombre = productos.nombre;
+    let precio = productos.precio;
+    agregarProducto(id, nombre, precio);
+  }))
+  .catch(err => console.log(err))
+}
 
 // CONSEGUIR DATOS CLIENTES
-fetch(API_URL + "/clientes")
-.then(res => res.json())
-.then(data => { 
-  let arrayClientes = Object.values(data)[0];
-  arrayClientes.sort(GetSortOrder("id"));
-  arrayClientes.forEach(clientes => {
-  let id = clientes.id;
-  let nombre = clientes.nombre;
-  let apellido = clientes.apellido;
-  let telefono = clientes.telefono;
-  let direccion = clientes.direccion;
-  let ciudad = clientes.ciudad;
-  let correo = clientes.email;
-  agregarCliente(id, nombre, apellido, telefono, direccion, ciudad, correo);
-})})
-.catch(err => console.log(err))
+function getClientes(){
+  fetch(API_URL + "/clientes")
+  .then(res => res.json())
+  .then(data => { 
+    let arrayClientes = Object.values(data)[0];
+    arrayClientes.sort(GetSortOrder("id"));
+    arrayClientes.forEach(clientes => {
+    let id = clientes.id;
+    let nombre = clientes.nombre;
+    let apellido = clientes.apellido;
+    let telefono = clientes.telefono;
+    let direccion = clientes.direccion;
+    let ciudad = clientes.ciudad;
+    let correo = clientes.email;
+    agregarCliente(id, nombre, apellido, telefono, direccion, ciudad, correo);
+  })})
+  .catch(err => console.log(err))
+}
 
 // CONSEGUIR DATOS MASCOTAS
-fetch(API_URL + "/mascotas")
-.then(res => res.json())
-.then(data => {
-  let arrayMascotas = Object.values(data)[0];
-  arrayMascotas.sort(GetSortOrder("id"));
-  arrayMascotas.forEach(mascotas => {
-  let id = mascotas.id;
-  let id_prop = mascotas.id_propietario;
-  let nombre = mascotas.nombre;
-  let tipo = mascotas.tipo;
-  let raza = mascotas.raza;
-  let fecha = new Date(mascotas.fecha_nacimiento);
-  let dia = fecha.getDate();
-  let mes = fecha.getMonth() + 1;
-  let año = fecha.getFullYear();
-  let fecha_nac = dia + "/" + mes + "/" + año; 
-  agregarMascota(id, id_prop, nombre, tipo, raza, fecha_nac);
-})})
-.catch(err => console.log(err))
+function getMascotas(){
+  fetch(API_URL + "/mascotas")
+  .then(res => res.json())
+  .then(data => {
+    let arrayMascotas = Object.values(data)[0];
+    arrayMascotas.sort(GetSortOrder("id"));
+    arrayMascotas.forEach(mascotas => {
+    let id = mascotas.id;
+    let id_prop = mascotas.id_propietario;
+    let nombre = mascotas.nombre;
+    let tipo = mascotas.tipo;
+    let raza = mascotas.raza;
+    let fecha = new Date(mascotas.fecha_nacimiento);
+    let dia = fecha.getDate();
+    let mes = fecha.getMonth() + 1;
+    let año = fecha.getFullYear();
+    let fecha_nac = dia + "/" + mes + "/" + año; 
+    agregarMascota(id, id_prop, nombre, tipo, raza, fecha_nac);
+  })})
+  .catch(err => console.log(err))
+}
 
 // CONSEGUIR DATOS EMPLEADOS
-fetch(API_URL + "/empleados")
-.then(res => res.json())
-.then(data => Object.values(data)[0].forEach(empleados => {
-  let id = empleados.id;
-  let nombre = empleados.nombre;
-  let apellido = empleados.apellido;
-  let telefono = empleados.telefono;
-  let direccion = empleados.direccion;
-  let role = empleados.role;
-  let ventas = empleados.ventasTotales;
-  agregarEmpleado(id, nombre, apellido, telefono, direccion, role, ventas);
-})) 
-.catch(err => console.log(err))
+function getEmpleados(){
+  fetch(API_URL + "/empleados")
+  .then(res => res.json())
+  .then(data => Object.values(data)[0].forEach(empleados => {
+    let id = empleados.id;
+    let nombre = empleados.nombre;
+    let apellido = empleados.apellido;
+    let telefono = empleados.telefono;
+    let direccion = empleados.direccion;
+    let role = empleados.role;
+    let ventas = empleados.ventasTotales;
+    agregarEmpleado(id, nombre, apellido, telefono, direccion, role, ventas);
+  })) 
+  .catch(err => console.log(err))
+}
 
 // ------------------- PRODUCTOS -------------------
 
@@ -84,27 +92,7 @@ function agregarProducto(id, nombre, precio){
   cell4.classList.add("justify-content-center");
   document.getElementById("nombreAg").value = "";
   document.getElementById("precioAg").value = "";
-  creacionBotonesProd();
-}
-
-// CREACION BOTONES NUEVOS PRODUCTOS
-function creacionBotonesProd(){
-  let tbodyRowCount = tableProd.rows.length - 1;
-  let tbodyCellsCount = tableProd.rows[tbodyRowCount].cells.length - 1;
-  let celda = tableProd.rows[tbodyRowCount].cells[tbodyCellsCount];
-  let btnMod = document.createElement("button");
-  let btnEli = document.createElement("button");
-  btnMod.innerHTML = "Modificar";
-  btnMod.className = "btn btn-warning";
-  btnMod.style.marginRight = "5px";
-  btnEli.innerHTML = "Eliminar";
-  btnEli.className = "btn btn-danger";
-  celda.appendChild(btnMod);
-  celda.appendChild(btnEli);
-  btnMod.onclick = modalModProd;
-  btnMod.setAttribute("data-bs-toggle", "modal");
-  btnMod.setAttribute("data-bs-target", "#modProdModal");
-  btnEli.onclick = borrarFila;
+  creacionBotones(tableProd, modalModProd, "modProdModal");
 }
 
 // MODIFICAR INFORMACIÓN PRODUCTOS
@@ -147,27 +135,7 @@ function agregarCliente(id, nombre, apellido, telefono, direccion, ciudad, corre
   cell6.innerHTML = ciudad;
   cell7.innerHTML = correo;
   cell8.classList.add("justify-content-center");
-  creacionBotonesClientes();
-}
-
-// CREACION BOTONES NUEVOS CLIENTES
-function creacionBotonesClientes(){
-  let tbodyRowCount = tableClientes.rows.length - 1;
-  let tbodyCellsCount = tableClientes.rows[tbodyRowCount].cells.length - 1;
-  let celda = tableClientes.rows[tbodyRowCount].cells[tbodyCellsCount];
-  let btnMod = document.createElement("button");
-  let btnEli = document.createElement("button");
-  btnMod.innerHTML = "Modificar";
-  btnMod.className = "btn btn-warning";
-  btnMod.style.marginRight = "5px";
-  btnEli.innerHTML = "Eliminar";
-  btnEli.className = "btn btn-danger";
-  celda.appendChild(btnMod);
-  celda.appendChild(btnEli);
-  btnMod.onclick = modalModClientes;
-  btnMod.setAttribute("data-bs-toggle", "modal");
-  btnMod.setAttribute("data-bs-target", "#modClienteModal");
-  btnEli.onclick = borrarFila;
+  creacionBotones(tableClientes, modalModClientes, "modClienteModal");
 }
 
 // MODIFICAR INFORMACIÓN CLIENTES
@@ -224,27 +192,7 @@ function agregarMascota(id, id_prop, nombre, tipo, raza, fecha){
   cell5.innerHTML = raza;
   cell6.innerHTML = fecha;
   cell7.classList.add("justify-content-center");
-  creacionBotonesMascotas();
-}
-
-// CREACION BOTONES NUEVOS MASCOTAS
-function creacionBotonesMascotas(){
-  let tbodyRowCount = tableMascotas.rows.length - 1;
-  let tbodyCellsCount = tableMascotas.rows[tbodyRowCount].cells.length - 1;
-  let celda = tableMascotas.rows[tbodyRowCount].cells[tbodyCellsCount];
-  let btnMod = document.createElement("button");
-  let btnEli = document.createElement("button");
-  btnMod.innerHTML = "Modificar";
-  btnMod.className = "btn btn-warning";
-  btnMod.style.marginRight = "5px";
-  btnEli.innerHTML = "Eliminar";
-  btnEli.className = "btn btn-danger";
-  celda.appendChild(btnMod);
-  celda.appendChild(btnEli);
-  btnMod.onclick = modalModMascotas;
-  btnMod.setAttribute("data-bs-toggle", "modal");
-  btnMod.setAttribute("data-bs-target", "#modMascotasModal");
-  btnEli.onclick = borrarFila;
+  creacionBotones(tableMascotas, modalModMascotas, "modMascotasModal");
 }
 
 // MODIFICAR INFORMACIÓN MASCOTAS
@@ -294,27 +242,7 @@ function agregarEmpleado(id, nombre, apellido, telefono, direccion, role, ventas
   cell6.innerHTML = role;
   cell7.innerHTML = ventas;
   cell8.classList.add("justify-content-center");
-  creacionBotonesEmpleados();
-}
-
-// CREACION BOTONES NUEVOS EMPLEADOS
-function creacionBotonesEmpleados(){
-  let tbodyRowCount = tableEmpleados.rows.length - 1;
-  let tbodyCellsCount = tableEmpleados.rows[tbodyRowCount].cells.length - 1;
-  let celda = tableEmpleados.rows[tbodyRowCount].cells[tbodyCellsCount];
-  let btnMod = document.createElement("button");
-  let btnEli = document.createElement("button");
-  btnMod.innerHTML = "Modificar";
-  btnMod.className = "btn btn-warning";
-  btnMod.style.marginRight = "5px";
-  btnEli.innerHTML = "Eliminar";
-  btnEli.className = "btn btn-danger";
-  celda.appendChild(btnMod);
-  celda.appendChild(btnEli);
-  btnMod.onclick = modalModEmpleados;
-  btnMod.setAttribute("data-bs-toggle", "modal");
-  btnMod.setAttribute("data-bs-target", "#modEmpleadosModal");
-  btnEli.onclick = borrarFila;
+  creacionBotones(tableEmpleados, modalModEmpleados, "modEmpleadosModal");
 }
 
 // MODIFICAR INFORMACIÓN EMPLEADOS
@@ -342,12 +270,23 @@ function modEmpleados(){
   document.getElementById("direccionEmpleadosMod").value = "";
 }
 
-// ELIMINAR FILA
-function borrarFila(){
+// ELIMINAR DATO DE LA TABLA Y DE LA BASE DE DATOS
+function borrarDato(){
   let rowID = event.target.parentNode.parentNode;
-  let nomProdDel = rowID.cells[1].innerHTML;
-  let opcion = confirm("¿Está seguro que desea borra el producto '" + nomProdDel + "'?");
+  let nomDatoDel = rowID.cells[1].innerHTML;
+  let opcion = confirm("¿Está seguro que desea borra el producto '" + nomDatoDel + "'?");
   if (opcion == true) {
     rowID.remove();
   }
 }
+
+// ELIMINAR FILA
+function borrarFila(){
+  let rowID = event.target.parentNode.parentNode;
+  rowID.remove();
+}
+
+getProductos();
+getClientes();
+getMascotas();
+getEmpleados();

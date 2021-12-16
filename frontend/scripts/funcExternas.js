@@ -1,5 +1,25 @@
 var API_URL = "http://localhost:5000";
 
+// CREACION BOTONES EN INVENTARIO
+function creacionBotones(tabla, funcion, modal){
+  let tbodyRowCount = tabla.rows.length - 1;
+  let tbodyCellsCount = tabla.rows[tbodyRowCount].cells.length - 1;
+  let celda = tabla.rows[tbodyRowCount].cells[tbodyCellsCount];
+  let btnMod = document.createElement("button");
+  let btnEli = document.createElement("button");
+  btnMod.innerHTML = "Modificar";
+  btnMod.className = "btn btn-warning";
+  btnMod.style.marginRight = "5px";
+  btnEli.innerHTML = "Eliminar";
+  btnEli.className = "btn btn-danger";
+  celda.appendChild(btnMod);
+  celda.appendChild(btnEli);
+  btnMod.onclick = funcion;
+  btnMod.setAttribute("data-bs-toggle", "modal");
+  btnMod.setAttribute("data-bs-target", "#" + modal);
+  btnEli.onclick = borrarDato;
+}
+
 // DAR FORMATO A NUMEROS
 function formato(numero){
   if(numero < 1000){
@@ -64,12 +84,12 @@ function limpiarNumero(string){
 
 // SORTEA UN JSON EN FORMA ASCENDENTE DE UN ATRIBUTO
 function GetSortOrder(prop) {    
-    return function(a, b) {    
-        if (a[prop] > b[prop]) {    
-            return 1;    
-        } else if (a[prop] < b[prop]) {    
-            return -1;    
-        }    
-        return 0;    
-    }    
-} 
+  return function(a, b) {    
+      if (a[prop] > b[prop]) {    
+        return 1;    
+      }else if (a[prop] < b[prop]) {    
+        return -1;    
+      } 
+      return 0;    
+  }
+}
