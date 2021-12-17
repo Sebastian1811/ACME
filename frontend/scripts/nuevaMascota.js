@@ -7,7 +7,7 @@ fetch(API_URL + "/mascotas")
 .then(data => {
   let arrayMascotas = Object.values(data)[0];
   let tamArrayMasctoas = arrayMascotas.length
-  arrayMascotas.sort(GetSortOrder("id"));
+  arrayMascotas.sort(sortOrder("id"));
   document.getElementById("id").value = arrayMascotas[tamArrayMasctoas - 1].id + 1;
 })
 .catch(err => console.log(err))
