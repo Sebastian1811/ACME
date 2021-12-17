@@ -20,6 +20,26 @@ function creacionBotones(tabla, funcion, modal){
   btnEli.onclick = borrarDato;
 }
 
+// CREACION BOTONES PARA DETALLES DE FACTURAS
+function creacionBotonesDet(tabla, funcion, modal){
+  let tbodyRowCount = tabla.rows.length - 1;
+  let tbodyCellsCount = tabla.rows[tbodyRowCount].cells.length - 1;
+  let celda = tabla.rows[tbodyRowCount].cells[tbodyCellsCount];
+  let btnDet = document.createElement("button");
+  let btnEli = document.createElement("button");
+  btnDet.innerHTML = "Detalles";
+  btnDet.className = "btn btn-success";
+  btnDet.style.marginRight = "5px";
+  btnEli.innerHTML = "Eliminar";
+  btnEli.className = "btn btn-danger";
+  celda.appendChild(btnDet);
+  celda.appendChild(btnEli);
+  btnDet.onclick = funcion;
+  btnDet.setAttribute("data-bs-toggle", "modal");
+  btnDet.setAttribute("data-bs-target", "#" + modal);
+  btnEli.onclick = borrarDato;
+}
+
 // DAR FORMATO A NUMEROS
 function formato(numero){
   if(numero < 1000){
@@ -45,7 +65,7 @@ function formatoMil(numero){
   return string;
 }
 
-// DAR FORMATO DE MIL
+// DAR FORMATO DE MILLON
 function formatoMillon(numero){
   string = numero.toString();
   let posPunto = string.length % 3;
@@ -57,7 +77,7 @@ function formatoMillon(numero){
   return string;
 }
 
-// DAR FORMATO DE MIL
+// DAR FORMATO DE MIL MILLON
 function formatoMilMillon(numero){
   string = numero.toString();
   let posPunto = string.length % 3;
@@ -74,7 +94,7 @@ function limpiarNumero(string){
   let valor = string;
   valor = valor.slice(1);
   valor = valor.replace(",", "");
-  let cantidadPuntos = (valor.match(/./g)||[]).length;
+  let cantidadPuntos = (valor.match(/\./g)).length;
   for(let i = 0; i<cantidadPuntos; i++){
     valor = valor.replace(".", "");
   }
@@ -82,12 +102,25 @@ function limpiarNumero(string){
   return valor
 }
 
+// CONVIERTE EL STRING DE UNA CEDULA, O ID, A UN NUMERO ENTERO
+function limpiarID(string){
+  let valor = string;
+  if(valor.match(/\./g) != null){
+    let cantidadPuntos = (valor.match(/\./g)).length;
+    for(let i = 0; i<cantidadPuntos; i++){
+      valor = valor.replace(".", "");
+    }
+  }
+  valor = parseInt(valor);
+  return valor
+}
+
 // SORTEA UN JSON EN FORMA ASCENDENTE DE UN ATRIBUTO
-function GetSortOrder(prop) {    
+function sortOrder(atributo){
   return function(a, b) {    
-      if (a[prop] > b[prop]) {    
+      if (a[atributo] > b[atributo]) {    
         return 1;    
-      }else if (a[prop] < b[prop]) {    
+      }else if (a[atributo] < b[atributo]) {    
         return -1;    
       } 
       return 0;    
