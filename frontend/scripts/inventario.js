@@ -182,6 +182,54 @@ function modProds(){
   }
 }
 
+function postProducto(){
+
+  fetch(API_URL + "/productos")
+  .then(res => res.json())
+  .then(data => {
+    let arrayProductos = Object.values(data)[0];
+    arrayProductos.sort(sortOrder("id"));
+    let tamArrayProductos = arrayProductos.length;
+    let id_last_prod = arrayProductos[tamArrayProductos - 1].id + 1;
+
+    let nombre_pos = document.getElementById("nombreAg").value;
+    let precio_pos = parseInt(document.getElementById("precioAg").value);
+
+    let lenPrecio = (document.getElementById("precioAg").value).length;
+    let tamPrecio = ("" + precio_pos).length;
+
+    if(lenPrecio != tamPrecio){
+      alert("El precio no es válido");
+      let myModal = new bootstrap.Modal(document.getElementById("agregarProdModal"));
+      myModal.show();
+    }else{
+
+      let datos = {id: id_last_prod,
+      nombre: nombre_pos,
+      precio: precio_pos,
+      descripcion: "",
+      tipo: "producto"
+      }
+
+      fetch(API_URL+"/producto", {
+        method: 'POST',
+        body: JSON.stringify(datos),
+        headers:{
+          'Content-Type': 'application/json'
+        }
+
+      }).then(res => res.json())
+      .then(response => {
+        agregarProducto(id_last_prod, nombre_pos, precio_pos);
+        nombre_pos = "";
+        precio_pos = "";
+      })
+      .catch(err => console.log(err)) 
+    }
+  })
+  .catch(err => console.log(err))
+}
+
 // ------------------- CLIENTES -------------------
 
 // AGREGAR CLIENTES A LA TABLA
@@ -399,10 +447,10 @@ function modMascotas(){
         .then(res => res.json())
         .then(response => {
           console.log("Success", response);
-          document.getElementById("nombreMascotasMod").value = "";
-          document.getElementById("cedDueñoMascotasMod").value = "";
-          document.getElementById("tipoMascotasMod").value = "";
-          document.getElementById("razaMascotasMod").value = "";
+          document.getElementById(nombreMascota).value = "";
+          document.getElementById(cedDueñoMascota).value = "";
+          document.getElementById(tipoMascota).value = "";
+          document.getElementById(razaMascotas).value = "";
         })
         .catch(err => console.log(err))
       })*/
