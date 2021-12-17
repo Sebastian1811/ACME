@@ -67,7 +67,7 @@ def delete_cliente(cliente_id):
     except:
         return abort(404)   
     session.close()      
-    return jsonify(cliente,mascotas = mascotas)
+    return jsonify(cliente = cliente,mascotas = mascotas)
 
 @bp.route('/cliente/<int:cliente_id>/mascotas')
 
