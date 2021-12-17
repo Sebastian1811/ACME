@@ -77,7 +77,6 @@ def login():
 def get_ventas_totales():
     schema = EmpleadoSchema(many=1,partial=1)
     stmt = select(Empleado.id,Empleado.nombre,Empleado.ventasTotales)
-
     try:
         result = session.execute(stmt)
         report = schema.dump(result)
