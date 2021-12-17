@@ -1,0 +1,67 @@
+let formulario = document.getElementById("formEmpleado");
+
+// SE MUESTRAN LOS DATOS EN UN MODAL PARA CONFIRMAR
+function mostrarDatos(){
+  formulario.addEventListener("submit", function(e){
+    e.preventDefault();
+
+    let tamCed = ("" + parseInt(document.getElementById("cedula").value)).length;
+    let tamTel = ("" + parseInt(document.getElementById("telefono").value)).length;
+
+    if(tamCed < 8){
+      alert("El número de cédula no es válido");
+    }else if(tamTel < 10){
+      alert("El número de teléfono no es válido");
+    }else{
+      var myModal = new bootstrap.Modal(document.getElementById("empleadoModalCenter"));
+      myModal.show();
+
+      var name = document.getElementById("nombres").value;
+      var surname = document.getElementById("apellidos").value;
+      var nombreCompleto = name + " " + surname;
+      var id = formato(parseInt(document.getElementById("cedula").value));
+      var x = document.getElementById("cargo").selectedIndex;
+      var y = document.getElementById("cargo").options;
+      document.getElementById("modalNombres").innerHTML = nombreCompleto;
+      document.getElementById("modalCedula").innerHTML = id;
+      document.getElementById("modalCargo").innerHTML = y[x].text;
+    }    
+  })
+}
+
+// SE AGREGAN LOS DATOS DE EMPLEADO A LA BASE DE DATOS
+function agregarEmpleado(){
+  
+  var datos = new FormData(formulario);
+
+  var data = {apellido: datos.get("apellidos"),
+    direccion: datos.get("direccion"),
+    id: parseInt(datos.get("cedula")),
+    id_tipo: "CC",
+    nombre: datos.get("nombres"),
+    role: datos.get("cargo"),
+    telefono: datos.get("telefono"),
+    password: datos.get("nombres").toLowerCase(),
+    ventasTotales: 0.0
+  };
+
+  console.log(data);
+
+  fetch(API_URL+"/empleado", {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers:{
+      'Content-Type': 'application/json'
+    }
+
+  }).then(res => res.json())
+  .then(response => {
+    document.getElementById("cedula").value = "";
+    document.getElementById("nombres").value = "";
+    document.getElementById("apellidos").value = "";
+    document.getElementById("telefono").value = "";
+    document.getElementById("direccion").value = "";
+    document.getElementById("cargo").selectedIndex = 0;
+  })
+  .catch(err => console.log(err))
+}
