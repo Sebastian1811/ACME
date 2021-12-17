@@ -48,16 +48,26 @@ def post_cliente():
 
 def delete_cliente(cliente_id):
     schema = ClienteSchema()
+    mascotaSchema = MascotaSchema(many=1)
     stmt = select(Cliente).where(Cliente.id == cliente_id)
+    stmt2 = select(Mascota).where(Mascota.id_propietario == cliente_id)
+    try: 
+        resultMascotas = session.execute(stmt2).scalars().all()  
+        mascotas = mascotaSchema.dump(resultMascotas) 
+        for i in resultMascotas:
+            session.delete(i)
+            session.commit()
+    except:
+        return abort(404)   
     try:
         result = session.execute(stmt).scalars().one()
         session.delete(result)
         session.commit()
         cliente = schema.dump(result)
-        session.close()
     except:
         return abort(404)   
-    return jsonify(cliente)
+    session.close()      
+    return jsonify(cliente,mascotas = mascotas)
 
 @bp.route('/cliente/<int:cliente_id>/mascotas')
 
