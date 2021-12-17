@@ -64,7 +64,6 @@ def factura(factura_id):
     schemaDetalle = DetalleSchema(many=1)
     schemaProducto = ProductoSchema(many=1)
 
-    Join = join(Factura,Detalle,Factura.id_factura == Detalle.id_factura)
     Join2 = join(Detalle,Producto,Detalle.id_producto == Producto.id)
 
     stmt = select(Factura).where(Factura.id_factura==factura_id)
