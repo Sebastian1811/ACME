@@ -1,4 +1,3 @@
-
 let formulario = document.getElementById("formEmpleado");
 
 // SE MUESTRAN LOS DATOS EN UN MODAL PARA CONFIRMAR
@@ -42,13 +41,15 @@ function agregarEmpleado(){
     nombre: datos.get("nombres"),
     role: datos.get("cargo"),
     telefono: datos.get("telefono"),
-    password: datos.get("nombres"),
+    password: datos.get("nombres").toLowerCase(),
     ventasTotales: 0.0
   };
 
+  console.log(data);
+
   fetch(API_URL+"/empleado", {
-    method: 'POST', // or 'PUT'
-    body: JSON.stringify(data), // data can be `string` or {object}!
+    method: 'POST',
+    body: JSON.stringify(data),
     headers:{
       'Content-Type': 'application/json'
     }
