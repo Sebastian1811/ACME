@@ -103,7 +103,6 @@ def delete_factura(id_factura):
         factura = schemaFactura.dump(resultFactura)
     except:
         return abort(404)    
-    
     try:
         resultDetalle = session.execute(stmt2).scalars().all()
         detalle = schemaDetalle.dump(resultDetalle)
@@ -112,4 +111,5 @@ def delete_factura(id_factura):
             session.commit()
     except:
         return abort(404)
+    session.close()    
     return jsonify(factura = factura,detalle = detalle)
