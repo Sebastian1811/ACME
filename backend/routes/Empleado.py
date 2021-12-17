@@ -1,9 +1,8 @@
 from flask import Blueprint,jsonify,request,abort 
 from sqlalchemy import select
-from werkzeug.wrappers import response
 from database.models.Empleado import Empleado
 from schemas.Empleado import EmpleadoSchema
-from marshmallow import INCLUDE
+
 from database.db import Session
 from werkzeug.security import check_password_hash
 
@@ -72,3 +71,17 @@ def login():
         return "Username o password incorrecta"    
 
     return jsonify(result='success')
+
+@bp.route("/empleado/ventas")
+
+def get_ventas_totales():
+    schema = EmpleadoSchema(many=1,partial=1)
+    stmt = select(Empleado.id,Empleado.nombre,Empleado.ventasTotales)
+
+    try:
+        result = session.execute(stmt)
+        report = schema.dump(result)
+        session.close()
+    except:
+        return abort(404)
+    return jsonify(reportes = report)
