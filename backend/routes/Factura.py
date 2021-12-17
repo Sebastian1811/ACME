@@ -1,5 +1,6 @@
 from flask import Blueprint,jsonify,request,abort
-from sqlalchemy import select
+from sqlalchemy import select,update
+from database.models.Empleado import Empleado
 from database.models.Producto import Producto
 from database.db import Session
 from database.models.Factura import Factura
@@ -17,12 +18,19 @@ session = Session
 def index_factura():
     solicitud = request.get_json()
     detalles = solicitud['detalles']
+    id_empleado = solicitud['id_empleado']
+    ventas =0
+    for i in detalles:
+        stmt = select(Producto.precio).where(Producto.id == i['id_producto'])
+        price = session.execute(stmt)
+        for j in price:
+            ventas += j.precio
     try:
         postedfactura = FacturaSchema().load(solicitud)
         factura = Factura(**postedfactura)
         session.add(factura)
         session.commit()
-        session.close
+        session.close()
     except:
         return abort(404)
     try:
@@ -34,6 +42,19 @@ def index_factura():
         session.close()
     except:
         return abort(404)   
+    try:
+        stmt = select(Empleado.ventasTotales).where(Empleado.id == id_empleado)
+        result = session.execute(stmt)
+        for i in result:
+            ventas += i.ventasTotales
+        stmtU = update(Empleado).where(Empleado.id == id_empleado).values(ventasTotales = ventas).\
+        execution_options(synchronize_session="fetch")
+        session.execute(stmtU)
+        session.commit()
+        session.close()
+        
+    except:
+        return abort(404)    
             
     return jsonify(result="SUCCESS")
 
@@ -95,6 +116,23 @@ def delete_factura(id_factura):
     schemaDetalle = DetalleSchema(many=1)
     stmt = select(Factura).where(Factura.id_factura==id_factura)
     stmt2 = select(Detalle).where(Detalle.id_factura == id_factura)
+
+    Join = join(Detalle,Producto,Detalle.id_producto == Producto.id)
+    Join2 = join(Factura,Empleado,Factura.id_empleado == Empleado.id)
+    stmt3 = select(Producto.precio).select_from(Join).where(Detalle.id_factura == id_factura)
+    stmt4 = select(Empleado.ventasTotales,Empleado.id).select_from(Join2).where(Factura.id_factura == id_factura)
+    
+    value = 0
+    ventasAct = 0
+    id_empleado = 0
+    result = session.execute(stmt3)
+    for i in result:
+        value += i.precio
+    result = session.execute(stmt4)
+    for i in result:
+        ventasAct = i.ventasTotales
+        id_empleado = i.id
+    newVentasTotales = ventasAct - value
     try:
         resultFactura = session.execute(stmt).scalars().one()
         session.delete(resultFactura)
@@ -110,5 +148,14 @@ def delete_factura(id_factura):
             session.commit()
     except:
         return abort(404)
+    try:
+        stmtU = update(Empleado).where(Empleado.id == id_empleado).values(ventasTotales = newVentasTotales).\
+        execution_options(synchronize_session="fetch")
+        session.execute(stmtU)
+        session.commit()
+        session.close()
+    except:
+        return abort(404)    
     session.close()    
     return jsonify(factura = factura,detalle = detalle)
+
