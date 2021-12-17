@@ -7,3 +7,4 @@ schemas/__pycache__
 .env
 /alembic
 alembic.ini
+launch.json
