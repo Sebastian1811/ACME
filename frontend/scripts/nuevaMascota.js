@@ -18,12 +18,14 @@ function mostrarDatos(){
   formulario.addEventListener("submit", function(e){
     e.preventDefault();
 
+    let lenCedDueño = (document.getElementById("cedDueño").value).length
     let cedDueño = parseInt(document.getElementById("cedDueño").value);
     let tamCed = ("" + cedDueño).length;
 
-    if(tamCed < 8){
+    if(tamCed < 8 || lenCedDueño == tamCed){
       alert("El número de cédula del dueño no es válido");
     }else{
+      console.log(cedDueño);
       fetch(API_URL + "/cliente/" + cedDueño)
       .then(res => res.json())
       .then(response => {
