@@ -39,6 +39,8 @@ fetch(API_URL + "/productos")
       precioProd.push(listadoProductos[i].precio);
     }
 
+    console.log(idProd);
+
     // AGREGAR PRODUCTOS A LA LISTA DE PRODUCTOS A PAGAR
     let optProd = document.getElementById("selPro");
     for(let i=0; i<idProd.length; i++){
@@ -147,12 +149,14 @@ function agregarProducto(){
     cell4.innerHTML = "$" + formato(precioProd[indice] * cant);
     document.getElementById("cantidadProducto").value = "";
 
-    if(idProductosAFacturar.includes(opcionSel) == false){
-      idProductosAFacturar.push(opcionSel);
-      productosAFacturar.push(nombresProd[opcionSel]);
+    let productoSeleccionado = idProductosAFacturar[opcionSel]
+
+    if(idProductosAFacturar.includes(productoSeleccionado) == false){
+      idProductosAFacturar.push(productoSeleccionado);
+      productosAFacturar.push(nombresProd[productoSeleccionado]);
       cantidadProductosAFacturar.push(parseInt(cantidadAgregada));
     }else{
-      let prodAgregado = idProductosAFacturar.indexOf(opcionSel);
+      let prodAgregado = idProductosAFacturar.indexOf(productoSeleccionado);
       cantidadProductosAFacturar[prodAgregado] += parseInt(cantidadAgregada);
     }
 
@@ -192,8 +196,6 @@ function postFactura(){
   })
 
   let fechaFactura = y + "-" + m + "-" + d + "T00:00:00.000000";
-
-  console.log(parseInt(getCookie("usuario")));
 
   let factura = {
     id_factura: factura_Actual,
