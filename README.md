@@ -1,6 +1,6 @@
 # ACME
 
-ACME es un software de gestion contable y de inventarios para una veterinaria, desarrollado bajo una arquitectura multitenant
+ACME es un software de gestion contable y de inventarios para una veterinaria, desarrollado bajo una arquitectura single tenant.
 
 El backend fue desarrollado con el framework de python llamado flask, el frontend fue desarrollado con html,bootstrap y java script.
 
