@@ -18,12 +18,15 @@ function mostrarDatos(){
   formulario.addEventListener("submit", function(e){
     e.preventDefault();
 
+    let lenCed = (document.getElementById("cedula").value).length
+    let lenTel = (document.getElementById("telefono").value).length
     let tamCed = ("" + parseInt(document.getElementById("cedula").value)).length;
     let tamTel = ("" + parseInt(document.getElementById("telefono").value)).length;
+    let ced = parseInt(document.getElementById("cedula").value);
 
-    if(tamCed < 8 || document.getElementById("cedula").value > 1500000000){
+    if(tamCed < 8 || lenCed != tamCed || ced > 1999999999){
       alert("El número de cédula no es válido");
-    }else if(tamTel < 10){
+    }else if(tamTel < 10 || lenTel != tamTel){
       alert("El número de teléfono no es válido");
     }else{
       var myModal = new bootstrap.Modal(document.getElementById("empleadoModalCenter"));
