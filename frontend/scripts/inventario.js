@@ -312,7 +312,7 @@ function modClientes(){
   let ciudadCliente = document.getElementById("ciudadClientesMod").value;
   let correoCliente = document.getElementById("correoClientesMod").value;
 
-  if(nombreCliente != "" || apellidosCliente != "" || direccionCliente != "" || ciudadCliente != "" || correoCliente  != ""){ 
+  if(nombreCliente != "" && apellidosCliente != "" && direccionCliente != "" && ciudadCliente != "" && correoCliente  != ""){ 
     if(telefonoCliente != ""){
 
       idFila = obetenerIDFila(btnPress);
@@ -759,6 +759,7 @@ function borrarDato(){
           getEmpleados();
         }
       });
+      .catch(err => alert("Error al eliminar el producto"))
   }
 }
 
