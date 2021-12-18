@@ -210,9 +210,8 @@ function postFactura(){
   }})
   .then(res => res.json())
   .then(response => {
-    console.log("Success", response);
-    detalles = [];
-    factura = null;
+    let myModal = new bootstrap.Modal(document.getElementById("genExitoFactModal"));
+    myModal.show();
   })
   .catch(err => console.log(err))
 
