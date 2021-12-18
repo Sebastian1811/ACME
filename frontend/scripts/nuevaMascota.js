@@ -54,7 +54,7 @@ function agregarMascota(){
   let dia = fecha.getDate() + 1;
   let mes = fecha.getMonth();
   let año = fecha.getFullYear();
-  let nacimiento = año + "-" + mes + "-" + dia + "T00:00:00.000000"
+  let nacimiento = año + "-" + mes + "-" + dia + "T00:00:00.000000";
 
   var data = {fecha_nacimiento: nacimiento,
     id: datos.get("id"),
