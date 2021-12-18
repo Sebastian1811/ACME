@@ -71,7 +71,6 @@ function agregarEmpleado(){
 
   }).then(res => res.json())
   .then(response => {
-    console.log("Success", response);
     document.getElementById("cedula").value = "";
     document.getElementById("nombres").value = "";
     document.getElementById("apellidos").value = "";
