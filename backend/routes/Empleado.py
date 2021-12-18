@@ -44,7 +44,8 @@ def post_empleado():
         new_empleado = EmpleadoSchema().dump(empleado)
         session.close()
     except:
-        abort(404)    
+        session.rollback()
+        return abort(404)    
     return jsonify(new_empleado),201
 
 @bp.route('/empleado/delete/<int:empleado_id>',methods=['DELETE'])
