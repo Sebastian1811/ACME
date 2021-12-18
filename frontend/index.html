@@ -37,7 +37,7 @@
           <form id="formulario">
             <div class="mb-4">
               <label for="Cedula" class="form-label">Cedula</label>
-              <input type="number" id="Cedula" class="form-control" name="Cedula" required>
+              <input type="text" maxlength="10" id="Cedula" class="form-control" name="Cedula" required>
               <small id="passwordHelpBlock" class="form-text text-muted">Ingrese el número de cédula sin puntos</small>
             </div>
             <div class="mb-4">
@@ -64,7 +64,7 @@
         <p id="errorDatosIncorrectos"></p>
       </div>
       <div class="modal-footer">
-        <small>Haga click por fuera del aviso para cerrarlo</small>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>
