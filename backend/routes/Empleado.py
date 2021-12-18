@@ -1,9 +1,9 @@
 from flask import Blueprint,jsonify,request,abort 
 from sqlalchemy import select
-from database.models.Empleado import Empleado
-from schemas.Empleado import EmpleadoSchema
+from backend.database.models.Empleado import Empleado
+from backend.schemas.Empleado import EmpleadoSchema
 
-from database.db import Session
+from backend.database.db import Session
 from werkzeug.security import check_password_hash
 
 session = Session

@@ -1,19 +1,19 @@
 from flask import Flask
 from flask_cors import CORS
-from database.models.Usuario import Usuario
-from database.db import Base,Engine,Session
-from database.models.Empleado import Empleado
-from database.models.Cliente import Cliente
-from database.models.Mascota import Mascota
-from database.models.Producto import Producto
-from database.models.Factura import Factura
-from database.models.Detalle import Detalle
+from backend.database.models.Usuario import Usuario
+from backend.database.db import Base,Engine,Session
+from backend.database.models.Empleado import Empleado
+from backend.database.models.Cliente import Cliente
+from backend.database.models.Mascota import Mascota
+from backend.database.models.Producto import Producto
+from backend.database.models.Factura import Factura
+from backend.database.models.Detalle import Detalle
 
-from routes.Cliente import bp as bpCliente
-from routes.Empleado import bp as bpEmpleado
-from routes.Mascota import bp as bpMascota
-from routes.Producto import bp as bpProducto
-from routes.Factura import bp as bpFactura
+from backend.routes.Cliente import bp as bpCliente
+from backend.routes.Empleado import bp as bpEmpleado
+from backend.routes.Mascota import bp as bpMascota
+from backend.routes.Producto import bp as bpProducto
+from backend.routes.Factura import bp as bpFactura
 
 Base.metadata.create_all(Engine)
 session = Session

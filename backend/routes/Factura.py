@@ -1,13 +1,13 @@
 from flask import Blueprint,jsonify,request,abort
 from sqlalchemy import select,update
-from database.models.Empleado import Empleado
-from database.models.Producto import Producto
-from database.db import Session
-from database.models.Factura import Factura
-from database.models.Detalle import Detalle
-from schemas.Factura import FacturaSchema
-from schemas.Detalle import DetalleSchema
-from schemas.Producto import ProductoSchema
+from backend.database.models.Empleado import Empleado
+from backend.database.models.Producto import Producto
+from backend.database.db import Session
+from backend.database.models.Factura import Factura
+from backend.database.models.Detalle import Detalle
+from backend.schemas.Factura import FacturaSchema
+from backend.schemas.Detalle import DetalleSchema
+from backend.schemas.Producto import ProductoSchema
 from sqlalchemy.sql.expression import join
 
 bp = Blueprint('factura',__name__)

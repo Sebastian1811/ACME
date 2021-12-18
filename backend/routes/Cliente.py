@@ -1,11 +1,11 @@
 from flask import Blueprint,jsonify,request,abort
 from sqlalchemy import select
-from database.models.Cliente import Cliente
-from database.models.Mascota import Mascota
+from backend.database.models.Cliente import Cliente
+from backend.database.models.Mascota import Mascota
 from sqlalchemy.sql.expression import join
-from schemas.Cliente import ClienteSchema
-from schemas.Mascota import MascotaSchema
-from database.db import Session
+from backend.schemas.Cliente import ClienteSchema
+from backend.schemas.Mascota import MascotaSchema
+from backend.database.db import Session
 
 session = Session
 bp = Blueprint('cliente',__name__)

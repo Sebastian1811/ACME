@@ -1,8 +1,8 @@
 from flask import Blueprint,request,jsonify,abort
 from sqlalchemy import select
-from database.db import Session
-from database.models.Producto import Producto
-from schemas.Producto import ProductoSchema
+from backend.database.db import Session
+from backend.database.models.Producto import Producto
+from backend.schemas.Producto import ProductoSchema
 
 bp = Blueprint('producto',__name__)
 session = Session
