@@ -63,6 +63,7 @@ def post_producto():
         session.commit()
         new_producto = ProductoSchema().dump(producto)
     except:
+        session.rollback()
         return abort(404)   
     return jsonify(new_producto),201
 

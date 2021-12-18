@@ -42,6 +42,7 @@ def post_mascota():
         session.commit()
         new_mascota = MascotaSchema().dump(mascota)
     except:
+        session.rollback()
         return abort(404)    
     return jsonify(new_mascota),201
 

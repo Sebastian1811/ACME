@@ -32,6 +32,7 @@ def index_factura():
         session.commit()
         session.close()
     except:
+        session.rollback()
         return abort(404)
     try:
         for i in detalles:
@@ -41,6 +42,7 @@ def index_factura():
             session.commit()
         session.close()
     except:
+        session.rollback()
         return abort(404)   
     try:
         stmt = select(Empleado.ventasTotales).where(Empleado.id == id_empleado)
@@ -54,6 +56,7 @@ def index_factura():
         session.close()
         
     except:
+        session.rollback()
         return abort(404)    
             
     return jsonify(result="SUCCESS")

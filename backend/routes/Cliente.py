@@ -44,6 +44,7 @@ def post_cliente():
         new_cliente = ClienteSchema().dump(cliente)
         session.close()
     except:
+        session.rollback()
         return abort(404)    
     return jsonify(new_cliente),201
 
