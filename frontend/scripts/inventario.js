@@ -758,7 +758,7 @@ function borrarDato(){
           tableEmpleados.innerHTML = "";
           getEmpleados();
         }
-      });
+      })
       .catch(err => alert("Error al eliminar el producto"))
   }
 }
