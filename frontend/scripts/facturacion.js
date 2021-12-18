@@ -55,38 +55,47 @@ let formVerificar = document.getElementById("formVer");
 formVerificar.addEventListener("submit", function(e){
   e.preventDefault();
   
-  var numCed = document.getElementById("inpVerificar").value;
+  let lenCed = (document.getElementById("inpVerificar").value).length;
+  let numCed = parseInt(document.getElementById("inpVerificar").value);
+  let tamCed = ("" + numCed).length;
 
-  let datos = new FormData(formVerificar);
+  if(lenCed == tamCed || numCed > 1999999999){
 
-  fetch(API_URL + "/cliente/" + datos.get("Cedula"))
-  .then(res => res.json())
-  .then(data => {
-    var nombreCli = data.nombre + " " + data.apellido;
-    var cedulaCli = data.id;
-    id_cliente_factura = cedulaCli;
-    var direccionCli = data.direccion;
-    var ciudadCli = data.ciudad;
+    let datos = new FormData(formVerificar);
 
-    document.getElementById("nombreCliente").innerHTML = nombreCli;
-    document.getElementById("nombreCliente").style.fontWeight = "bold";
-    document.getElementById("cedulaCliente").innerHTML = "CC: " + cedulaCli;
-    document.getElementById("direccionCliente").innerHTML = direccionCli;
-    document.getElementById("direccionCliente").style.fontWeight = "bold";
-    document.getElementById("ciudadCliente").innerHTML = ciudadCli;
+    fetch(API_URL + "/cliente/" + datos.get("Cedula"))
+    .then(res => res.json())
+    .then(data => {
+      var nombreCli = data.nombre + " " + data.apellido;
+      var cedulaCli = data.id;
+      id_cliente_factura = cedulaCli;
+      var direccionCli = data.direccion;
+      var ciudadCli = data.ciudad;
 
-    document.getElementById("selMet").disabled = false;
-    document.getElementById("selPro").disabled = false;
-    document.getElementById("cantidadProducto").disabled = false;
-    document.getElementById("agregarProd").disabled = false;
-    document.getElementById("genFactura").disabled = false;
+      document.getElementById("nombreCliente").innerHTML = nombreCli;
+      document.getElementById("nombreCliente").style.fontWeight = "bold";
+      document.getElementById("cedulaCliente").innerHTML = "CC: " + cedulaCli;
+      document.getElementById("direccionCliente").innerHTML = direccionCli;
+      document.getElementById("direccionCliente").style.fontWeight = "bold";
+      document.getElementById("ciudadCliente").innerHTML = ciudadCli;
 
-  })
-  .catch(err => {
+      document.getElementById("selMet").disabled = false;
+      document.getElementById("selPro").disabled = false;
+      document.getElementById("cantidadProducto").disabled = false;
+      document.getElementById("agregarProd").disabled = false;
+      document.getElementById("genFactura").disabled = false;
+
+    })
+    .catch(err => {
+      var myModal = new bootstrap.Modal(document.getElementById("cedNoRegModal"));
+      document.getElementById("errorCedVer").innerHTML = "El cliente con número de cédula " + numCed + " no se encuentra registrado en el sistema."
+      myModal.show();
+    })
+  }else{
     var myModal = new bootstrap.Modal(document.getElementById("cedNoRegModal"));
-    document.getElementById("errorCedVer").innerHTML = "El cliente con número de cédula " + numCed + " no se encuentra registrado en el sistema."
+    document.getElementById("errorCedVer").innerHTML = "Ingrese un número de cédula válido";
     myModal.show();
-  })
+  }
 });
 
 // DATOS PARA OBTENER LA FECHA DEL DÍA ACTUAL
