@@ -21,3 +21,6 @@ El frontend fue desplegado en github pages y para su uso se debe acceder al sigu
 ![image](https://user-images.githubusercontent.com/91354744/146654000-8f36a98f-821c-4274-82dd-f2a7ec1ee8ad.png)
 
 Los usuarios se podran loguear desde la siguiente vista para acceder a toda la app, seguir las instrucciones:
+
+![image](https://user-images.githubusercontent.com/91354744/146654093-c35cabd0-b303-4f54-8abc-ecc26f26f301.png)
+
