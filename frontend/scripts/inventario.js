@@ -27,7 +27,21 @@ function getProductos(){
       let id = productos.id;
       let nombre = productos.nombre;
       let precio = productos.precio;
-      agregarProducto(id, nombre, precio);
+      let tipo = productos.tipo;
+      agregarProducto(id, nombre, precio, tipo[0].toUpperCase() + tipo.slice(1));
+  })})
+  .catch(err => console.log(err))
+  fetch(API_URL + "/procedimientos")
+  .then(res => res.json())
+  .then(data => {
+    let arrayProductos = Object.values(data)[0];
+    arrayProductos.sort(sortOrder("id"));
+    Object.values(data)[0].forEach(procedimientos => {
+      let id = procedimientos.id;
+      let nombre = procedimientos.nombre;
+      let precio = procedimientos.precio;
+      let tipo = procedimientos.tipo;
+      agregarProducto(id, nombre, precio, tipo[0].toUpperCase() + tipo.slice(1));
   })})
   .catch(err => console.log(err))
 }
@@ -116,17 +130,19 @@ function getFacturas(){
 // ------------------- PRODUCTOS -------------------
 
 // AGREGAR PRODUCTOS A LA TABLA
-function agregarProducto(id, nombre, precio){
+function agregarProducto(id, nombre, precio, tipo){
   let row = tableProd.insertRow();
   row.classList.add("align-middle");
   let cell1 = row.insertCell(0);
   let cell2 = row.insertCell(1);
   let cell3 = row.insertCell(2);
   let cell4 = row.insertCell(3);
+  let cell5 = row.insertCell(4);
   cell1.innerHTML = id;
   cell2.innerHTML = nombre;
   cell3.innerHTML = "$" + formato(precio);
-  cell4.classList.add("justify-content-center");
+  cell4.innerHTML = tipo;
+  cell5.classList.add("justify-content-center");
   document.getElementById("nombreAg").value = "";
   document.getElementById("precioAg").value = "";
   creacionBotones(tableProd, modalModProd, "modProdModal");
@@ -577,21 +593,39 @@ function modEmpleados(){
 
 // AGREGAR FACTURAS A LA TABLA
 function agregarFacturas(id, id_cliente, id_empleado, fecha){
-  let row = tableFacturas.insertRow();
-  row.classList.add("align-middle");
-  let cell1 = row.insertCell(0);
-  let cell2 = row.insertCell(1);
-  let cell3 = row.insertCell(2);
-  let cell4 = row.insertCell(3);
-  let cell5 = row.insertCell(4);
-  cell1.innerHTML = formato(id);
-  cell2.innerHTML = formato(id_cliente);
-  cell3.innerHTML = formato(id_empleado);
-  cell4.innerHTML = fecha;
-  cell5.classList.add("justify-content-center");
-  creacionBotonesDet(tableFacturas, modalVisDetallesFacturas, "visDetallesFacturasModal");
-}
 
+  fetch(API_URL + "/factura/details/" + id)
+  .then(res => res.json())
+  .then(data => {
+    let details = Object.values(data);
+
+    let totalFactura = 0;
+
+    for(let i=0; i<details[0].length; i++){
+      let cant_Producto = details[0][i].cantidad;
+      let precio_Producto = details[2][i].precio;
+      totalFactura += cant_Producto * precio_Producto;
+    }
+
+    let row = tableFacturas.insertRow();
+    row.classList.add("align-middle");
+    let cell1 = row.insertCell(0);
+    let cell2 = row.insertCell(1);
+    let cell3 = row.insertCell(2);
+    let cell4 = row.insertCell(3);
+    let cell5 = row.insertCell(4);
+    let cell6 = row.insertCell(5);
+    cell1.innerHTML = formato(id);
+    cell2.innerHTML = formato(id_cliente);
+    cell3.innerHTML = formato(id_empleado);
+    cell4.innerHTML = fecha;
+    cell5.innerHTML = "$" + formato(totalFactura);
+    cell6.classList.add("justify-content-center");
+    creacionBotonesDet(tableFacturas, modalVisDetallesFacturas, "visDetallesFacturasModal");
+
+    })
+    .catch(err => console.log(err))
+}
 
 // VISUALIZAR DETALLES DE LA FACTURA
 function modalVisDetallesFacturas(){
@@ -602,8 +636,7 @@ function modalVisDetallesFacturas(){
   fetch(API_URL + "/factura/details/" + idFactura)
   .then(res => res.json())
   .then(data => {
-    let details = Object.values(data);
-
+    let details = Object.values(data);;
     details[0].sort(sortOrder("id_producto"));
     let totalFactura = 0;
 
@@ -612,7 +645,7 @@ function modalVisDetallesFacturas(){
       let name_Producto = details[2][i].nombre;
       let cant_Producto = details[0][i].cantidad;
       let precio_Producto = details[2][i].precio;
-      totalFactura += cant_Producto + precio_Producto;
+      totalFactura += cant_Producto * precio_Producto;
 
       let pIDProducto = document.createElement("p");
       let pNombreProducto = document.createElement("p");
