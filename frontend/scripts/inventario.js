@@ -537,8 +537,8 @@ function modEmpleados(){
         telefono: telefonoEmpleado,
       }
 
-      fetch(API_URL+"/empleado", {
-        method: 'POST',
+      fetch(API_URL+"/empleado/" + idFila, {
+        method: 'PUT',
         body: JSON.stringify(data),
         headers:{
           'Content-Type': 'application/json'
