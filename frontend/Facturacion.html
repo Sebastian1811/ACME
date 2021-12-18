@@ -195,6 +195,24 @@
     </div>
   </div>
 
+  <!-- MODAL CONFIRMACIÓN GENERACIÓN FACTURA -->
+  <div class="modal fade" id="genExitoFactModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Éxito</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="divConfFact">
+          <p>La factura se ha generado con éxito</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="location.reload()">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL CEDULA NO REGISTRADA -->
   <div class="modal fade" id="cedNoRegModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -206,7 +224,7 @@
           <p id="errorCedVer"></p>
         </div>
         <div class="modal-footer">
-          <small>Haga click por fuera del aviso para cerrarlo</small>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
         </div>
       </div>
     </div>
