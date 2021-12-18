@@ -29,8 +29,8 @@ formulario.addEventListener('submit', function(e){
       headers:{
         'Content-Type': 'application/json'
       }
-
-    }).then(res => res.json())
+    })
+    .then(res => res.json())
     .then(response => {
       fetch(API_URL + "/empleado/" + id)
       .then(res => res.json())
@@ -50,6 +50,7 @@ formulario.addEventListener('submit', function(e){
         }
       })
       .catch(err => console.log(err))
+      
     })
     .catch(err => {
       let myModal = new bootstrap.Modal(document.getElementById("datosIncorrectos"));
