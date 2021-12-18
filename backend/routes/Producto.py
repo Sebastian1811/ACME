@@ -12,7 +12,7 @@ session = Session
 
 def index_producto():
     schema = ProductoSchema(many=1)
-    stmt = select(Producto).where(Producto.tipo=='producto')
+    stmt = select(Producto)
     result = session.execute(stmt).scalars().all()
     productos = schema.dump(result)
     session.close()
