@@ -17,7 +17,7 @@ function mostrarDatos(){
     let tamTel = ("" + tel).length;
     
 
-    if(tamCed < 8 || lenCed != tamCed || ced > 1999999999){
+    if(lenCed != tamCed || ced > 1999999999){
       alert("El número de cédula no es válido");
     }else if(tamTel < 10 || lenTel != tamTel){
       alert("El número de teléfono no es válido");
