@@ -19,12 +19,19 @@ def index_factura():
     solicitud = request.get_json()
     detalles = solicitud['detalles']
     id_empleado = solicitud['id_empleado']
-    ventas =0
+    ventas = 0
+    cantidad = []
+    precio = []
     for i in detalles:
         stmt = select(Producto.precio).where(Producto.id == i['id_producto'])
         price = session.execute(stmt)
+        cantidad.append(i['cantidad'])
         for j in price:
-            ventas += j.precio
+            precio.append(j.precio) 
+
+    for i in range(len(precio)):
+        ventas += precio[i] * cantidad[i]
+        
     try:
         postedfactura = FacturaSchema().load(solicitud)
         factura = Factura(**postedfactura)
@@ -75,10 +82,14 @@ def facturas():
 
 def get_factura(id_factura):
     schema = FacturaSchema()
-    stmt = select(Factura).where(id_factura)
-    result = session.execute(stmt).scalars().one()
-    session.close()
-    factura = schema.dump(result)
+    stmt = select(Factura).where(Factura.id_factura == id_factura)
+    try:
+        result = session.execute(stmt).scalars().one()
+        session.close()
+        factura = schema.dump(result)
+    except:
+        session.rollback()
+        return abort(404)
     return jsonify(factura)    
 
 @bp.route('/factura/details/<int:factura_id>')
@@ -124,13 +135,22 @@ def delete_factura(id_factura):
     Join2 = join(Factura,Empleado,Factura.id_empleado == Empleado.id)
     stmt3 = select(Producto.precio).select_from(Join).where(Detalle.id_factura == id_factura)
     stmt4 = select(Empleado.ventasTotales,Empleado.id).select_from(Join2).where(Factura.id_factura == id_factura)
-    
+
+    stmt5 = select(Detalle.cantidad).where(Detalle.id_factura == id_factura)
+    cantidad = []
     value = 0
+    precio = []
     ventasAct = 0
     id_empleado = 0
     result = session.execute(stmt3)
+   
     for i in result:
-        value += i.precio
+        precio.append(i.precio)
+    result = session.execute(stmt5)   
+    for i in result:
+        cantidad.append(i.cantidad)  
+    for i in range(len(cantidad)):
+        value += cantidad[i]*precio[i]    
     result = session.execute(stmt4)
     for i in result:
         ventasAct = i.ventasTotales
@@ -161,4 +181,3 @@ def delete_factura(id_factura):
         return abort(404)    
     session.close()    
     return jsonify(factura = factura,detalle = detalle)
-
