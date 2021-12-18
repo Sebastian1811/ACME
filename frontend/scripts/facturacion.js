@@ -39,8 +39,6 @@ fetch(API_URL + "/productos")
       precioProd.push(listadoProductos[i].precio);
     }
 
-    console.log(idProd);
-
     // AGREGAR PRODUCTOS A LA LISTA DE PRODUCTOS A PAGAR
     let optProd = document.getElementById("selPro");
     for(let i=0; i<idProd.length; i++){
@@ -121,7 +119,8 @@ function suma(filas){
 var tbodyRef = table.getElementsByTagName('tbody')[0];
 function agregarProducto(){
 
-  let opcionSel = document.getElementById("selPro").selectedIndex;
+  let indiceSel = document.getElementById("selPro").selectedIndex;
+  let opcionSel = document.getElementById("selPro").options;
 
   let cantidadAgregada = document.getElementById("cantidadProducto").value; 
   let lenCantidad = cantidadAgregada.length
@@ -140,16 +139,14 @@ function agregarProducto(){
     let cell2 = row.insertCell(1);
     let cell3 = row.insertCell(2);
     let cell4 = row.insertCell(3);
-    let x = document.getElementById("selPro").selectedIndex;
-    let y = document.getElementById("selPro").options;
-    indice = y[x].index - 1;
+    indice = opcionSel[indiceSel].index - 1;
     cell1.innerHTML = nombresProd[indice];
     cell2.innerHTML = "$" + formato(precioProd[indice]);
     cell3.innerHTML = cant;
     cell4.innerHTML = "$" + formato(precioProd[indice] * cant);
     document.getElementById("cantidadProducto").value = "";
 
-    let productoSeleccionado = idProductosAFacturar[opcionSel]
+    let productoSeleccionado = idProd[opcionSel[indiceSel].index - 1];
 
     if(idProductosAFacturar.includes(productoSeleccionado) == false){
       idProductosAFacturar.push(productoSeleccionado);
