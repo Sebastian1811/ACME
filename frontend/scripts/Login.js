@@ -2,12 +2,19 @@ let formulario = document.getElementById("formulario");
 
 formulario.addEventListener('submit', function(e){
   e.preventDefault();
-  
-  let datos = new FormData(formulario);
 
+  let datos = new FormData(formulario);
   let id = parseInt(datos.get("Cedula"));
 
-  let data = {username: parseInt(datos.get("Cedula")),password: datos.get("pass")};
+  let data = {username: parseInt(datos.get("Cedula")),
+    password: datos.get("pass")
+  };
+
+  if(getCookie("usuario") != null){
+    document.cookie = "usuario=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  }
+
+  document.cookie = "usuario = " + datos.get("Cedula") + "; path = /";
 
   fetch(API_URL+"/login", {
     method: 'POST',
@@ -25,13 +32,13 @@ formulario.addEventListener('submit', function(e){
         document.getElementById("Cedula").value = "";
         document.getElementById("Contra").value = "";
         let url = window.location.href;
-        url += "hub.html";
+        url = "hub.html";
         window.location = url;
       }else{
         document.getElementById("Cedula").value = "";
         document.getElementById("Contra").value = "";
         let url = window.location.href;
-        url += "hubEmpleado.html";
+        url = "hubEmpleado.html";
         window.location = url;
       }
     })
