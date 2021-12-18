@@ -7,6 +7,6 @@ El backend fue desarrollado con el framework de python llamado flask, el fronten
 
 Para el motor de base de datos se utilizo PostgreSQL
 
-El despliegue de la base de datos y el servidor remoto fue realizado en heroku
+El despliegue de la base de datos y del backend para el servidor remoto fue realizado en heroku
 
 El frontend fue desplegado en git y para su uso se debe acceder al siguiente link:https://sebastian1811.github.io/ACME/frontend/index.html
