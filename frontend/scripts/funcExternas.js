@@ -157,6 +157,7 @@ function deleteCookie() {
   document.cookie = "usuario=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 };
 
+// DEPENDIENDO DEL ROL, SE VUELVE AL HUB CORRECTO
 function volver(){
   fetch(API_URL + "/empleado/" + parseInt(getCookie("usuario")))
   .then(res => res.json())
@@ -167,4 +168,10 @@ function volver(){
       location.href = "hub.html";
     }
   })
+}
+
+// CIERRA SESIÓN
+function closeSesion(){
+  deleteCookie();
+  window.location.href = "..";
 }
