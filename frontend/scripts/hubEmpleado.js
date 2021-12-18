@@ -1,8 +1,5 @@
 window.onload = function(){
   checkCookie();
-};
-
-function getNombre(){
   fetch(API_URL + "/empleado/" + parseInt(getCookie("usuario")))
   .then(res => res.json())
   .then(data => {
