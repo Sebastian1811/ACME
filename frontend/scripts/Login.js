@@ -1,4 +1,5 @@
 let formulario = document.getElementById("formulario");
+deleteCookie();
 
 formulario.addEventListener('submit', function(e){
   e.preventDefault();
