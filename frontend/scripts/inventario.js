@@ -31,19 +31,6 @@ function getProductos(){
       agregarProducto(id, nombre, precio, tipo[0].toUpperCase() + tipo.slice(1));
   })})
   .catch(err => console.log(err))
-  fetch(API_URL + "/procedimientos")
-  .then(res => res.json())
-  .then(data => {
-    let arrayProductos = Object.values(data)[0];
-    arrayProductos.sort(sortOrder("id"));
-    Object.values(data)[0].forEach(procedimientos => {
-      let id = procedimientos.id;
-      let nombre = procedimientos.nombre;
-      let precio = procedimientos.precio;
-      let tipo = procedimientos.tipo;
-      agregarProducto(id, nombre, precio, tipo[0].toUpperCase() + tipo.slice(1));
-  })})
-  .catch(err => console.log(err))
 }
 
 // CONSEGUIR DATOS CLIENTES
