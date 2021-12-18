@@ -17,10 +17,12 @@ let id_cliente_factura = 0;
 fetch(API_URL + "/facturas")
   .then(res => res.json())
   .then(data => {
+    let arrayFacturas = Object.values(data)[0];
+    arrayFacturas.sort(sortOrder("id_factura"));
     let tamFacturas = Object.values(data)[0].length;
-    var numUltimaFactura = Object.values(data)[0][tamFacturas - 1].id_factura;
+    var numUltimaFactura = arrayFacturas[tamFacturas - 1].id_factura;
     factura_Actual = numUltimaFactura + 1;
-    document.getElementById("numeroFactura").innerHTML += numUltimaFactura + 1;
+    document.getElementById("numeroFactura").innerHTML += factura_Actual;
   })
 .catch(err => console.log(err))
 
@@ -169,7 +171,7 @@ function mostrarValorFacturaModal(){
     document.getElementById("divConfFact").innerHTML = confFact;
     let myModal = new bootstrap.Modal(document.getElementById("genFactModal"));
     myModal.show();
-  //}  
+  }  
 }
 
 function postFactura(){
@@ -189,6 +191,8 @@ function postFactura(){
   })
 
   let fechaFactura = y + "-" + m + "-" + d + "T00:00:00.000000";
+
+  console.log(parseInt(getCookie("usuario")));
 
   let factura = {
     id_factura: factura_Actual,
