@@ -31,6 +31,7 @@ fetch(API_URL + "/productos")
   .then(res => res.json())
   .then(data => {
     let listadoProductos = Object.values(data)[0];
+    listadoProductos.sort(sortOrder("nombre"));
 
     for(let i=0; i<listadoProductos.length; i++){
       idProd.push(listadoProductos[i].id);
@@ -42,7 +43,7 @@ fetch(API_URL + "/productos")
     let optProd = document.getElementById("selPro");
     for(let i=0; i<idProd.length; i++){
       var option = document.createElement("option");
-      option.text = nombresProd[i] + " | $" + precioProd[i].toString();
+      option.text = nombresProd[i] + " | $" + formato(precioProd[i]);
       optProd.add(option);
     }
 
