@@ -1,3 +1,7 @@
+window.onload = function(){
+  checkCookie();
+};
+
 let formulario = document.getElementById("formEmpleado");
 
 // SE MUESTRAN LOS DATOS EN UN MODAL PARA CONFIRMAR
@@ -49,7 +53,7 @@ function agregarEmpleado(){
     ventasTotales: 0.0
   };
 
-  fetch(API_URL+"/empleado", {
+  fetch(API_URL + "/empleado", {
     method: 'POST',
     body: JSON.stringify(data),
     headers:{

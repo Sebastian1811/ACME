@@ -1,3 +1,7 @@
+window.onload = function(){
+  checkCookie();
+};
+
 let formulario = document.getElementById("formCliente");
 
 // SE MUESTRAN LOS DATOS EN UN MODAL PARA CONFIRMAR
@@ -42,8 +46,8 @@ function agregarCliente(){
   };
 
   fetch(API_URL+"/cliente", {
-    method: 'POST', // or 'PUT'
-    body: JSON.stringify(data), // data can be `string` or {object}!
+    method: 'POST',
+    body: JSON.stringify(data),
     headers:{
       'Content-Type': 'application/json'
     }

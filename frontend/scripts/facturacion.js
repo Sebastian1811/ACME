@@ -1,3 +1,7 @@
+window.onload = function(){
+  checkCookie();
+};
+
 var table = document.getElementById("myTable");
 let idProd = [];
 let nombresProd = [];
@@ -215,29 +219,3 @@ function limpiarTabla(){
   document.getElementById("valTot").innerHTML = "$0,00";
   valorTotalFac = 0;
 }
-
-/*
-FORMA POST FACTURA
-
-{
-    "id_factura": 1,
-    "id_cliente": 133,
-    "id_empleado": 122,
-    "fecha": "2014-12-22T03:12:58.019077",
-    "detalles": [
-        {
-            "num_detalle": 1,
-            "id_factura": 1,
-            "id_producto": 1,
-            "cantidad": 2
-        },
-        {
-            "num_detalle": 2,
-            "id_factura": 1,
-            "id_producto": 2,
-            "cantidad": 2
-        }
-    ]
-}
-
-*/

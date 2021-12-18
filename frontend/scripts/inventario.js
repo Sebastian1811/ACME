@@ -1,3 +1,7 @@
+window.onload = function(){
+  checkCookie();
+};
+
 var tableProd = document.getElementById("bodyProds");
 var tableClientes = document.getElementById("bodyClientes");
 var tableMascotas = document.getElementById("bodyMascotas");
@@ -137,7 +141,7 @@ function modProds(){
       btnPress.cells[1].innerHTML = nombreProd;
       btnPress.cells[2].innerHTML = "$" + formato(precioProd);
 
-      /*fetch(API_URL+"/producto/delete/" + idFila, {
+      fetch(API_URL+"/producto/delete/" + idFila, {
         method: 'DELETE',
       })
       .then(res => res.json())
@@ -167,7 +171,7 @@ function modProds(){
           document.getElementById("precioProdMod").value = "";
         })
         .catch(err => console.log(err))
-      })*/
+      })
     }else{
         alert("El número ingresado no es válido");
         let myModal = new bootstrap.Modal(document.getElementById("modProdModal"));
@@ -293,7 +297,7 @@ function modClientes(){
       btnPress.cells[5].innerHTML = ciudadCliente;
       btnPress.cells[6].innerHTML = correoCliente;
 
-      /*fetch(API_URL + "/cliente/delete/" + idFila, {
+      fetch(API_URL + "/cliente/delete/" + idFila, {
         method: "DELETE",
       })
       .then(res => res.json())
@@ -327,7 +331,7 @@ function modClientes(){
           document.getElementById("correoClientesMod").value;
         })
         .catch(err => console.log(err))
-      })*/
+      })
     }else{
       alert("El número de teléfono no es válido");
       let myModal = new bootstrap.Modal(document.getElementById("modClienteModal"));
@@ -423,7 +427,7 @@ function modMascotas(){
       btnPress.cells[4].innerHTML = razaMascotas;
       btnPress.cells[5].innerHTML = nacimientoMascotas;
 
-      /*fetch(API_URL + "/mascota/delete/" + idFila, {
+      fetch(API_URL + "/mascota/delete/" + idFila, {
         method: "DELETE",
       })
       .then(res => res.json())
@@ -453,7 +457,7 @@ function modMascotas(){
           document.getElementById(razaMascotas).value = "";
         })
         .catch(err => console.log(err))
-      })*/
+      })
     }else{
       alert("El número de la cédula del dueño no es válido");
       let myModal = new bootstrap.Modal(document.getElementById("modClienteModal"));
@@ -489,7 +493,7 @@ function agregarEmpleado(id, nombre, apellido, telefono, direccion, role, ventas
   cell4.innerHTML = telefono;
   cell5.innerHTML = direccion;
   cell6.innerHTML = role;
-  cell7.innerHTML = ventas;
+  cell7.innerHTML = formato(ventas);
   cell8.classList.add("justify-content-center");
   creacionBotones(tableEmpleados, modalModEmpleados, "modEmpleadosModal");
 }
@@ -527,7 +531,7 @@ function modEmpleados(){
   let x = document.getElementById("cargoEmpleadosMod").selectedIndex;
   let y = document.getElementById("cargoEmpleadosMod").options;
   let cargoEmpleado = y[x].text;
-  let ventasT = parseInt(btnPress.cells[6].innerHTML);
+  let ventasT = limpiarID(btnPress.cells[6].innerHTML);
 
   if(nombreEmpleado != "" || apellidoEmpleado != "" || direccionEmpleado != "" || cargoEmpleado != ""){ 
     if(telefonoEmpleado != ""){
@@ -719,8 +723,14 @@ function borrarDato(){
       .then(res => res.json())
       .then(response => {
         console.log("Success", response)
-        rowID.remove()
-    });
+        var myModal = new bootstrap.Modal(document.getElementById("confElimModal"));
+        myModal.show();
+        rowID.remove();
+        if(tabla == "cliente"){
+          tableMascotas.innerHTML = "";
+          getMascotas();
+        }
+      });
   }
 }
 

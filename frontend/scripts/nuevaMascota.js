@@ -1,3 +1,7 @@
+window.onload = function(){
+  checkCookie();
+};
+
 let botonRegistrar = document.getElementById("btnRegistrar");
 let formulario = document.getElementById("formCliente");
 
@@ -8,7 +12,7 @@ fetch(API_URL + "/mascotas")
   let arrayMascotas = Object.values(data)[0];
   let tamArrayMasctoas = arrayMascotas.length
   arrayMascotas.sort(sortOrder("id"));
-  document.getElementById("id").value = arrayMascotas[tamArrayMasctoas - 1].id + 1;
+  document.getElementById("id").value = 1;
 })
 .catch(err => console.log(err))
 
@@ -22,7 +26,7 @@ function mostrarDatos(){
     let cedDueño = parseInt(document.getElementById("cedDueño").value);
     let tamCed = ("" + cedDueño).length;
 
-    if(tamCed < 8 || lenCedDueño == tamCed){
+    if(tamCed < 8 || lenCedDueño != tamCed){
       alert("El número de cédula del dueño no es válido");
     }else{
       console.log(cedDueño);

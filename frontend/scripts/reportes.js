@@ -1,3 +1,7 @@
+window.onload = function(){
+  checkCookie();
+};
+
 let canvasProds = document.getElementById("ventasProductos").getContext('2d');
 let canvasVentasEmpleados = document.getElementById("ventasPorEmpleado").getContext('2d');
 
@@ -72,7 +76,7 @@ let chartP = new Chart(canvasProds, {
         borderWidth: 2,
       }
     },
-    responsive: false,
+    responsive: true,
     plugins: {
       legend: {
         position: 'right',
