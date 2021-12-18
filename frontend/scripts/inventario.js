@@ -102,7 +102,7 @@ function getFacturas(){
   .then(res => res.json())
   .then(data => {
     let arrayFacturas = Object.values(data)[0];
-    arrayFacturas.sort(sortOrder("id"));
+    arrayFacturas.sort(sortOrder("id_factura"));
     arrayFacturas.forEach(facturas => {
       let fecha = new Date(facturas.fecha);
       let dia = fecha.getDate();
@@ -505,7 +505,7 @@ function agregarEmpleado(id, nombre, apellido, telefono, direccion, role, ventas
   cell4.innerHTML = telefono;
   cell5.innerHTML = direccion;
   cell6.innerHTML = role;
-  cell7.innerHTML = formato(ventas);
+  cell7.innerHTML = "$" + formato(ventas);
   cell8.classList.add("justify-content-center");
   creacionBotones(tableEmpleados, modalModEmpleados, "modEmpleadosModal");
 }
@@ -608,6 +608,8 @@ function agregarFacturas(id, id_cliente, id_empleado, fecha){
   .then(res => res.json())
   .then(data => {
     let details = Object.values(data);
+    details[0].sort(sortOrder("id_producto"));
+    details[2].sort(sortOrder("id"));
 
     let totalFactura = 0;
 
@@ -639,6 +641,8 @@ function agregarFacturas(id, id_cliente, id_empleado, fecha){
 
 // VISUALIZAR DETALLES DE LA FACTURA
 function modalVisDetallesFacturas(){
+
+  let totalFactura = 0;
 
   let bodyModalDetalles = document.getElementById("divDetallesFact");
   let rowID = event.target.parentNode.parentNode;
@@ -733,9 +737,9 @@ function borrarDato(){
   if(tabla == "cliente" || tabla == "empleado"){
     let apeDatoDel = rowID.cells[2].innerHTML;
     nombreCompletoDatoDel = nombreCompletoDatoDel + " " + apeDatoDel;
-    let opcion = confirm("¿Está seguro que desea borrar " + tabla + " " + nombreCompletoDatoDel + "?");
+    var opcion = confirm("¿Está seguro que desea borrar " + tabla + " " + nombreCompletoDatoDel + "?");
   }else{
-    let opcion = confirm("¿Está seguro que desea borrar " + tabla + " " + idDatoDel + "?");
+    var opcion = confirm("¿Está seguro que desea borrar " + tabla + " " + idDatoDel + "?");
   }
   
   if (opcion == true) {
@@ -750,6 +754,9 @@ function borrarDato(){
         if(tabla == "cliente"){
           tableMascotas.innerHTML = "";
           getMascotas();
+        }else if(tabla == "factura"){
+          tableEmpleados.innerHTML = "";
+          getEmpleados();
         }
       });
   }
