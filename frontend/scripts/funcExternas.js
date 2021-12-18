@@ -1,4 +1,4 @@
-var API_URL = "http://localhost:5000";
+var API_URL = "https://acme-backend1.herokuapp.com"; //https://acme-backend1.herokuapp.com/   http://localhost:5000
 
 // CREACION BOTONES EN INVENTARIO
 function creacionBotones(tabla, funcion, modal){
@@ -126,3 +126,46 @@ function sortOrder(atributo){
       return 0;    
   }
 }
+
+// CONSEGUIR COOKIE DE LA SESIÓN
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+};
+
+// VERIFICA SI HAY COOKIE EN EL NAVEGADOR
+function checkCookie() {
+  if(getCookie("usuario") == "") {
+    alert("No estas logeado");
+    window.location.href = "..";
+  }
+};
+
+// BORRA LA COOKIE DE LA SESIÓN
+function deleteCookie() {
+  document.cookie = "usuario=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+};
+
+// VERIFICA LA COOKIE PARA SABER SI ES
+function verificarSuperusuario() {
+  let verificado = false;
+
+  fetch(API_URL + "/empleado/" + parseInt(getCookie("usuario")))
+  .then(res => res.json())
+  .then(data => console.log(data))
+  .catch(err => console.log(err))
+
+  return verificado;
+};
+
