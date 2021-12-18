@@ -624,28 +624,43 @@ function modalVisDetallesFacturas(){
   .then(data => {
     let details = Object.values(data);
 
+    details[0].sort(sortOrder("id_producto"));
+    let totalFactura = 0;
+
     for(let i=0; i<details[0].length; i++){
       let id_Producto = details[0][i].id_producto;
       let name_Producto = details[2][i].nombre;
       let cant_Producto = details[0][i].cantidad;
+      let precio_Producto = details[2][i].precio;
+      totalFactura += cant_Producto + precio_Producto;
 
       let pIDProducto = document.createElement("p");
       let pNombreProducto = document.createElement("p");
       let pCantidadProducto = document.createElement("p");
+      let pPrecioProducto = document.createElement("p");
+      
       let sID = document.createElement("strong");
       let sName = document.createElement("strong");
       let sCant = document.createElement("strong");
+      let sPrecio = document.createElement("strong");
+
       sID.innerHTML = "ID Producto: ";
       pIDProducto.style.marginBottom = "-5px";
       sName.innerHTML = "Nombre: ";
       pNombreProducto.style.marginBottom = "-5px";
       sCant.innerHTML = "Cantidad: ";
+      pCantidadProducto.style.marginBottom = "-5px";
+      sPrecio.innerHTML = "Precio: ";
+
       let labelIDProducto = document.createElement("label");
       labelIDProducto.innerHTML = id_Producto;
       let labelNombreProducto = document.createElement("label");
       labelNombreProducto.innerHTML = name_Producto;
       let labelCantidadProducto = document.createElement("label");
       labelCantidadProducto.innerHTML = cant_Producto;
+      let labelPrecioProducto = document.createElement("label");
+      labelPrecioProducto.innerHTML = "$" + formato(precio_Producto);
+
       bodyModalDetalles.appendChild(pIDProducto);
       pIDProducto.appendChild(sID);
       pIDProducto.appendChild(labelIDProducto);
@@ -655,7 +670,22 @@ function modalVisDetallesFacturas(){
       bodyModalDetalles.appendChild(pCantidadProducto);
       pCantidadProducto.appendChild(sCant);
       pCantidadProducto.appendChild(labelCantidadProducto);
+      bodyModalDetalles.appendChild(pPrecioProducto);
+      pPrecioProducto.appendChild(sPrecio);
+      pPrecioProducto.appendChild(labelPrecioProducto);
+
     }
+
+    let pTotalFactura = document.createElement("p");
+    let sTotal = document.createElement("strong");
+    sTotal.innerHTML = "Total: ";
+    pTotalFactura.style.marginTop = "10px";
+    let labelTotalFactura = document.createElement("label");
+    labelTotalFactura.innerHTML = "$" + formato(totalFactura);
+
+    bodyModalDetalles.appendChild(pTotalFactura);
+    pTotalFactura.appendChild(sTotal);
+    pTotalFactura.appendChild(labelTotalFactura);
     
 
   })
