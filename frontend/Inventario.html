@@ -197,11 +197,18 @@
           <div class="modal-body" id="divConfFact">
             <div class="col form-group">
               <label>Nombre</label>
-              <input type="text" id="nombreAg" class="form-control" placeholder="Ingrese el nombre del producto" autocomplete="off">
+              <input type="text" id="nombreProdAg" class="form-control" placeholder="Ingrese el nombre del producto" autocomplete="off">
             </div>
             <div class="col form-group mgt">
               <label>Precio</label>   
-              <input type="number" id="precioAg" class="form-control" placeholder="Ingrese el precio del producto" autocomplete="off">
+              <input type="number" id="precioProdAg" class="form-control" placeholder="Ingrese el precio del producto" autocomplete="off">
+            </div>
+            <div class="col form-group mgt">
+              <label>Cargo</label>
+              <select id="tipoProdAg" class="form-control" autocomplete="off" required>
+                <option>Producto</option>
+                <option>Procedimiento</option>
+              </select>
             </div>
           </div>
           <div class="modal-footer">
@@ -228,6 +235,13 @@
             <div class="col form-group mgt">
               <label>Precio</label>   
               <input type="number" id="precioProdMod" class="form-control" placeholder="Ingrese el nuevo precio del producto" autocomplete="off">
+            </div>
+            <div class="col form-group mgt">
+              <label>Cargo</label>
+              <select id="tipoProdMod" class="form-control" autocomplete="off" required>
+                <option>Producto</option>
+                <option>Procedimiento</option>
+              </select>
             </div>
           </div>
           <div class="modal-footer">

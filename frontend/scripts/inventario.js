@@ -143,8 +143,9 @@ function agregarProducto(id, nombre, precio, tipo){
   cell3.innerHTML = "$" + formato(precio);
   cell4.innerHTML = tipo;
   cell5.classList.add("justify-content-center");
-  document.getElementById("nombreAg").value = "";
-  document.getElementById("precioAg").value = "";
+  document.getElementById("nombreProdAg").value = "";
+  document.getElementById("precioProdAg").value = "";
+  document.getElementById("tipoProdAg").selectedIndex = 0;
   creacionBotones(tableProd, modalModProd, "modProdModal");
 }
 
@@ -154,13 +155,27 @@ function modalModProd(){
   btnPress = rowID;
   let nombreProd = rowID.cells[1].innerHTML;
   let precioProd = limpiarNumero(rowID.cells[2].innerHTML);
+  let tipoProd = rowID.cells[3].innerHTML;
   document.getElementById("nombreProdMod").value = nombreProd;
   document.getElementById("precioProdMod").value = precioProd;
+  let indicesSelectTipoProdMod = document.getElementById("tipoProdMod").length;
+  let y = document.getElementById("tipoProdMod").options;
+  let a = 0;
+  for (let i=0; i<indicesSelectTipoProdMod; i++) {
+    if(y[i].text == tipoProd){
+      a = i;
+      break;
+    }
+  }
+  document.getElementById("tipoProdMod").selectedIndex = a;
 }
 
 function modProds(){
   let nombreProd = document.getElementById("nombreProdMod").value;
   let precioProd = document.getElementById("precioProdMod").value;
+  let x = document.getElementById("tipoProdMod").selectedIndex;
+  let y = document.getElementById("tipoProdMod").options;
+  let tipoProd = (y[x].text).toLowerCase();
 
   if(nombreProd != ""){ 
     if(precioProd != ""){
@@ -169,10 +184,13 @@ function modProds(){
 
       btnPress.cells[1].innerHTML = nombreProd;
       btnPress.cells[2].innerHTML = "$" + formato(precioProd);
+      btnPress.cells[3].innerHTML = tipoProd[0].toUpperCase() + tipoProd.slice(1);
+      
 
       let data = {
-        nombre: document.getElementById("nombreProdMod").value, 
-        precio: parseInt(document.getElementById("precioProdMod").value), 
+        nombre: nombreProd, 
+        precio: parseInt(precioProd),
+        tipo: tipoProd, 
       }
 
       fetch(API_URL+"/producto/" + idFila, {
@@ -213,11 +231,13 @@ function postProducto(){
     let tamArrayProductos = arrayProductos.length;
     let id_last_prod = arrayProductos[tamArrayProductos - 1].id + 1;
 
-    let nombre_pos = document.getElementById("nombreAg").value;
-    let precio_pos = parseInt(document.getElementById("precioAg").value);
-
-    let lenPrecio = (document.getElementById("precioAg").value).length;
+    let nombre_pos = document.getElementById("nombreProdAg").value;
+    let precio_pos = parseInt(document.getElementById("precioProdAg").value);
+    let lenPrecio = (document.getElementById("precioProdAg").value).length;
     let tamPrecio = ("" + precio_pos).length;
+    let x = document.getElementById("tipoProdAg").selectedIndex;
+    let y = document.getElementById("tipoProdAg").options;
+    let tipo_pos = y[x].text;
 
     if(lenPrecio != tamPrecio){
       alert("El precio no es válido");
@@ -226,10 +246,10 @@ function postProducto(){
     }else{
 
       let datos = {id: id_last_prod,
-      nombre: nombre_pos,
-      precio: precio_pos,
-      descripcion: "",
-      tipo: "producto"
+        nombre: nombre_pos,
+        precio: precio_pos,
+        descripcion: "",
+        tipo: tipo_pos.toLowerCase()
       }
 
       fetch(API_URL+"/producto", {
