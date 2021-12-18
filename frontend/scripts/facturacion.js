@@ -162,9 +162,9 @@ function mostrarValorFacturaModal(){
 
   let metodoSeleccionado = document.getElementById("selMet").selectedIndex;
 
-  //if(metodoSeleccionado == 0){
-    //alert("Seleccione un método de pago");
-  //}else{
+  if(metodoSeleccionado == 0){
+    alert("Seleccione un método de pago");
+  }else{
     let confFact = "El total de la factura es de " + document.getElementById("valTot").innerHTML;
     document.getElementById("divConfFact").innerHTML = confFact;
     let myModal = new bootstrap.Modal(document.getElementById("genFactModal"));
@@ -193,7 +193,7 @@ function postFactura(){
   let factura = {
     id_factura: factura_Actual,
     id_cliente: id_cliente_factura,
-    id_empleado: 122,
+    id_empleado: parseInt(getCookie("usuario")),
     fecha: fechaFactura,
     detalles: detalles
   }

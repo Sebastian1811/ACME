@@ -3,7 +3,7 @@ window.onload = function(){
   fetch(API_URL + "/empleado/" + parseInt(getCookie("usuario")))
   .then(res => res.json())
   .then(data => {
-    if(data.role != "Superusuario"){
+    if(data.role != "superusuario"){
       alert("No deberías estar aqui");
       location.href = "hubEmpleado.html";
     }else{
