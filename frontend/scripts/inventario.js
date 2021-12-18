@@ -20,12 +20,15 @@ var tableFacturas = document.getElementById("bodyFacturas");
 function getProductos(){
   fetch(API_URL + "/productos")
   .then(res => res.json())
-  .then(data => Object.values(data)[0].forEach(productos => {
-    let id = productos.id;
-    let nombre = productos.nombre;
-    let precio = productos.precio;
-    agregarProducto(id, nombre, precio);
-  }))
+  .then(data => {
+    let arrayProductos = Object.values(data)[0];
+    arrayProductos.sort(sortOrder("id"));
+    Object.values(data)[0].forEach(productos => {
+      let id = productos.id;
+      let nombre = productos.nombre;
+      let precio = productos.precio;
+      agregarProducto(id, nombre, precio);
+  })})
   .catch(err => console.log(err))
 }
 
@@ -76,16 +79,19 @@ function getMascotas(){
 function getEmpleados(){
   fetch(API_URL + "/empleados")
   .then(res => res.json())
-  .then(data => Object.values(data)[0].forEach(empleados => {
-    let id = empleados.id;
-    let nombre = empleados.nombre;
-    let apellido = empleados.apellido;
-    let telefono = empleados.telefono;
-    let direccion = empleados.direccion;
-    let role = empleados.role;
-    let ventas = empleados.ventasTotales;
-    agregarEmpleado(id, nombre, apellido, telefono, direccion, role, ventas);
-  })) 
+  .then(data => {
+    let arrayEmpleados = Object.values(data)[0];
+    arrayEmpleados.sort(sortOrder("id"));
+    Object.values(data)[0].forEach(empleados => {
+      let id = empleados.id;
+      let nombre = empleados.nombre;
+      let apellido = empleados.apellido;
+      let telefono = empleados.telefono;
+      let direccion = empleados.direccion;
+      let role = empleados.role;
+      let ventas = empleados.ventasTotales;
+      agregarEmpleado(id, nombre, apellido, telefono, direccion, role, ventas);
+    })}) 
   .catch(err => console.log(err))
 }
 
@@ -137,11 +143,10 @@ function modalModProd(){
 }
 
 function modProds(){
-  // FETCH POST PRODUCTOS
   let nombreProd = document.getElementById("nombreProdMod").value;
   let precioProd = document.getElementById("precioProdMod").value;
 
-  if(typeof(nombreProd) == "string" && nombreProd != ""){ 
+  if(nombreProd != ""){ 
     if(precioProd != ""){
 
       idFila = obetenerIDFila(btnPress);
@@ -149,41 +154,29 @@ function modProds(){
       btnPress.cells[1].innerHTML = nombreProd;
       btnPress.cells[2].innerHTML = "$" + formato(precioProd);
 
-      fetch(API_URL+"/producto/delete/" + idFila, {
-        method: 'DELETE',
+      let data = {
+        nombre: document.getElementById("nombreProdMod").value, 
+        precio: parseInt(document.getElementById("precioProdMod").value), 
+      }
+
+      fetch(API_URL+"/producto/" + idFila, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers:{
+          'Content-Type': 'application/json'
+        }
       })
       .then(res => res.json())
       .then(response => {
-
-      let datos = new FormData(formulario);
-
-        let data = {
-          descripcion: "Producto", 
-          id: idFila, 
-          nombre: document.getElementById("nombreProdMod").value, 
-          precio: parseInt(document.getElementById("precioProdMod").value), 
-          tipo: "Producto"
-        }
-
-        fetch(API_URL+"/producto", {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers:{
-            'Content-Type': 'application/json'
-          }
-        })
-        .then(res => res.json())
-        .then(response => {
-          console.log("Success", response);
-          document.getElementById("nombreProdMod").value = "";
-          document.getElementById("precioProdMod").value = "";
-        })
-        .catch(err => console.log(err))
+        document.getElementById("nombreProdMod").value = "";
+        document.getElementById("precioProdMod").value = "";
       })
+      .catch(err => console.log(err))
+
     }else{
-        alert("El número ingresado no es válido");
-        let myModal = new bootstrap.Modal(document.getElementById("modProdModal"));
-        myModal.show();
+      alert("El número ingresado no es válido");
+      let myModal = new bootstrap.Modal(document.getElementById("modProdModal"));
+      myModal.show();
     }
   }else{
     alert("El nombre del producto no es válido");
@@ -305,41 +298,33 @@ function modClientes(){
       btnPress.cells[5].innerHTML = ciudadCliente;
       btnPress.cells[6].innerHTML = correoCliente;
 
-      fetch(API_URL + "/cliente/delete/" + idFila, {
-        method: "DELETE",
+      let data = {apellido: document.getElementById("apellidosClientesMod").value,
+        ciudad: document.getElementById("ciudadClientesMod").value,
+        direccion: document.getElementById("direccionClientesMod").value,
+        email: document.getElementById("correoClientesMod").value,
+        nombre: document.getElementById("nombreClientesMod").value,
+        telefono: document.getElementById("telefonoClientesMod").value
+      }
+
+      fetch(API_URL+"/cliente/" + idFila, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers:{
+          'Content-Type': 'application/json'
+        }
       })
       .then(res => res.json())
       .then(response => {
-
-        let data = {apellido: document.getElementById("apellidosClientesMod").value,
-          ciudad: document.getElementById("ciudadClientesMod").value,
-          direccion: document.getElementById("direccionClientesMod").value,
-          email: document.getElementById("correoClientesMod").value,
-          id: idFila,
-          id_tipo: "CC",
-          nombre: document.getElementById("nombreClientesMod").value,
-          telefono: document.getElementById("telefonoClientesMod").value
-        }
-
-        fetch(API_URL+"/cliente", {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers:{
-            'Content-Type': 'application/json'
-          }
-        })
-        .then(res => res.json())
-        .then(response => {
-          console.log("Success", response);
-          document.getElementById("nombreClientesMod").value;
-          document.getElementById("apellidosClientesMod").value;
-          document.getElementById("telefonoClientesMod").value;
-          document.getElementById("direccionClientesMod").value;
-          document.getElementById("ciudadClientesMod").value;
-          document.getElementById("correoClientesMod").value;
-        })
-        .catch(err => console.log(err))
+        console.log("Success", response);
+        document.getElementById("nombreClientesMod").value;
+        document.getElementById("apellidosClientesMod").value;
+        document.getElementById("telefonoClientesMod").value;
+        document.getElementById("direccionClientesMod").value;
+        document.getElementById("ciudadClientesMod").value;
+        document.getElementById("correoClientesMod").value;
       })
+      .catch(err => console.log(err))
+
     }else{
       alert("El número de teléfono no es válido");
       let myModal = new bootstrap.Modal(document.getElementById("modClienteModal"));
@@ -435,37 +420,30 @@ function modMascotas(){
       btnPress.cells[4].innerHTML = razaMascotas;
       btnPress.cells[5].innerHTML = nacimientoMascotas;
 
-      fetch(API_URL + "/mascota/delete/" + idFila, {
-        method: "DELETE",
+      let data = {fecha_nacimiento: nacimiento,
+        id_propietario: cedDueñoMascota,
+        nombre: document.getElementById("nombreMascotasMod").value,
+        raza: document.getElementById("razaMascotasMod").value,
+        tipo: document.getElementById("tipoMascotasMod").value
+      }
+
+      fetch(API_URL+"/mascota/" + idFila, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers:{
+          'Content-Type': 'application/json'
+        }
       })
       .then(res => res.json())
       .then(response => {
-
-        let data = {fecha_nacimiento: nacimiento,
-          id: idFila,
-          id_propietario: cedDueñoMascota,
-          nombre: document.getElementById("nombreMascotasMod").value,
-          raza: document.getElementById("razaMascotasMod").value,
-          tipo: document.getElementById("tipoMascotasMod").value
-        }
-
-        fetch(API_URL+"/mascota", {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers:{
-            'Content-Type': 'application/json'
-          }
-        })
-        .then(res => res.json())
-        .then(response => {
-          console.log("Success", response);
-          document.getElementById(nombreMascota).value = "";
-          document.getElementById(cedDueñoMascota).value = "";
-          document.getElementById(tipoMascota).value = "";
-          document.getElementById(razaMascotas).value = "";
-        })
-        .catch(err => console.log(err))
+        console.log("Success", response);
+        document.getElementById(nombreMascota).value = "";
+        document.getElementById(cedDueñoMascota).value = "";
+        document.getElementById(tipoMascota).value = "";
+        document.getElementById(razaMascotas).value = "";
       })
+      .catch(err => console.log(err))
+
     }else{
       alert("El número de la cédula del dueño no es válido");
       let myModal = new bootstrap.Modal(document.getElementById("modClienteModal"));
@@ -552,41 +530,31 @@ function modEmpleados(){
       btnPress.cells[4].innerHTML = direccionEmpleado;
       btnPress.cells[5].innerHTML = cargoEmpleado;
 
-      fetch(API_URL + "/empleado/delete/" + idFila, {
-        method: "DELETE",
+      let data = {apellido: apellidoEmpleado,
+        direccion: direccionEmpleado,
+        nombre: nombreEmpleado,
+        role: cargoEmpleado,
+        telefono: telefonoEmpleado,
+      }
+
+      fetch(API_URL+"/empleado", {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers:{
+          'Content-Type': 'application/json'
+        }
       })
       .then(res => res.json())
       .then(response => {
-
-        let data = {apellido: apellidoEmpleado,
-          direccion: direccionEmpleado,
-          id: idFila,
-          id_tipo: "CC",
-          nombre: nombreEmpleado,
-          role: cargoEmpleado,
-          telefono: telefonoEmpleado,
-          password: nombreEmpleado,
-          ventasTotales: ventasT
-        }
-
-        fetch(API_URL+"/empleado", {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers:{
-            'Content-Type': 'application/json'
-          }
-        })
-        .then(res => res.json())
-        .then(response => {
-          console.log("Success", response);
-          document.getElementById("nombreEmpleadosMod").value = "";
-          document.getElementById("apellidoEmpleadosMod").value = "";
-          document.getElementById("telefonoEmpleadosMod").value = "";
-          document.getElementById("direccionEmpleadosMod").value = "";
-          document.getElementById("cargoEmpleadosMod").selectedIndex = 0;
-        })
-        .catch(err => console.log(err))
+        console.log("Success", response);
+        document.getElementById("nombreEmpleadosMod").value = "";
+        document.getElementById("apellidoEmpleadosMod").value = "";
+        document.getElementById("telefonoEmpleadosMod").value = "";
+        document.getElementById("direccionEmpleadosMod").value = "";
+        document.getElementById("cargoEmpleadosMod").selectedIndex = 0;
       })
+      .catch(err => console.log(err))
+
     }else{
       alert("El número de teléfono no es válido");
       let myModal = new bootstrap.Modal(document.getElementById("modClienteModal"));
@@ -730,7 +698,6 @@ function borrarDato(){
       })
       .then(res => res.json())
       .then(response => {
-        console.log("Success", response)
         var myModal = new bootstrap.Modal(document.getElementById("confElimModal"));
         myModal.show();
         rowID.remove();
