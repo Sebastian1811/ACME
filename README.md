@@ -12,7 +12,7 @@ El despliegue de la base de datos y del backend para el servidor remoto fue real
 ![image](https://user-images.githubusercontent.com/91354744/146653995-32032b5d-6a31-4d58-9aca-5e504febed98.png)
 
 
-Las rutas de la Api proporcionadas por backend pueden ser accedidas desde el link:https://acme-backend1.herokuapp.com/
+Las rutas de la Api proporcionadas por backend pueden ser accedidas desde el siguiente link:https://acme-backend1.herokuapp.com/
 
 ![image](https://user-images.githubusercontent.com/91354744/146653981-00313b8d-7a59-4325-a667-444e5141f956.png)
 
