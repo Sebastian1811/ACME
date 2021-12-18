@@ -47,7 +47,7 @@ formulario.addEventListener('submit', function(e){
   })
   .catch(err => {
     let myModal = new bootstrap.Modal(document.getElementById("datosIncorrectos"));
-    document.getElementById("errorDatosIncorrectos").innerHTML = err;
+    document.getElementById("errorDatosIncorrectos").innerHTML = "Número de usuario o contraseña incorrecta";
     myModal.show();
   })
 })
