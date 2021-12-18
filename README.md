@@ -3,9 +3,9 @@ Sistema de gestión contable
 
 ACME es un software de gestion contable y de inventarios para una veterinaria, desarrollado bajo una arquitectura multitenant
 
-El backend fue desarrollado con el framework de python llamado flask, el frontend fue desarrollado con html,bootstrap y java script
+El backend fue desarrollado con el framework de python llamado flask, el frontend fue desarrollado con html,bootstrap y java script.
 
-Para el motor de base de datos se utilizo PostgreSQL
+Para el motor de base de datos se utilizo PostgreSQL.
 
 El despliegue de la base de datos y del backend para el servidor remoto fue realizado en heroku
 
