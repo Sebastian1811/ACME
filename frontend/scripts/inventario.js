@@ -23,7 +23,7 @@ function getProductos(){
   .then(data => {
     let arrayProductos = Object.values(data)[0];
     arrayProductos.sort(sortOrder("id"));
-    Object.values(data)[0].forEach(productos => {
+    arrayProductos.forEach(productos => {
       let id = productos.id;
       let nombre = productos.nombre;
       let precio = productos.precio;
@@ -96,7 +96,7 @@ function getEmpleados(){
   .then(data => {
     let arrayEmpleados = Object.values(data)[0];
     arrayEmpleados.sort(sortOrder("id"));
-    Object.values(data)[0].forEach(empleados => {
+    arrayEmpleados.forEach(empleados => {
       let id = empleados.id;
       let nombre = empleados.nombre;
       let apellido = empleados.apellido;
@@ -113,17 +113,20 @@ function getEmpleados(){
 function getFacturas(){
   fetch(API_URL + "/facturas")
   .then(res => res.json())
-  .then(data => Object.values(data)[0].forEach(facturas => {
-    let fecha = new Date(facturas.fecha);
-    let dia = fecha.getDate();
-    let mes = fecha.getMonth() + 1;
-    let año = fecha.getFullYear();
-    let fecha_fac = dia + "/" + mes + "/" + año;
-    let id_fact = facturas.id_factura;
-    let id_clien = facturas.id_cliente;
-    let id_empl = facturas.id_empleado;
-    agregarFacturas(id_fact, id_clien, id_empl, fecha_fac);
-  })) 
+  .then(data => {
+    let arrayFacturas = Object.values(data)[0];
+    arrayFacturas.sort(sortOrder("id"));
+    arrayFacturas.forEach(facturas => {
+      let fecha = new Date(facturas.fecha);
+      let dia = fecha.getDate();
+      let mes = fecha.getMonth() + 1;
+      let año = fecha.getFullYear();
+      let fecha_fac = dia + "/" + mes + "/" + año;
+      let id_fact = facturas.id_factura;
+      let id_clien = facturas.id_cliente;
+      let id_empl = facturas.id_empleado;
+      agregarFacturas(id_fact, id_clien, id_empl, fecha_fac);
+  })}) 
   .catch(err => console.log(err))
 }
 
