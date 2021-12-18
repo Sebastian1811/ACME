@@ -20,4 +20,4 @@ El backend puede ser accedido desde el siguiente link:https://acme-backend1.hero
 El frontend fue desplegado en github pages y para su uso se debe acceder al siguiente link:https://sebastian1811.github.io/ACME/frontend/index.html
 ![image](https://user-images.githubusercontent.com/91354744/146654000-8f36a98f-821c-4274-82dd-f2a7ec1ee8ad.png)
 
-Los usuarios
+Los usuarios se podran loguear desde la siguiente vista
