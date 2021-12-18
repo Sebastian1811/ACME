@@ -53,11 +53,15 @@ def post_empleado():
 def delete_empleado(empleado_id):
     schema = EmpleadoSchema()
     stmt = select(Empleado).where(Empleado.id == empleado_id)
-    result = session.execute(stmt).scalars().one()
-    session.delete(result)
-    session.commit()
-    empleado = schema.dump(result)
-    session.close()
+    try:
+        result = session.execute(stmt).scalars().one()
+        session.delete(result)
+        session.commit()
+        empleado = schema.dump(result)
+        session.close()
+    except:
+        session.rollback()
+        return abort(404)    
     return jsonify(empleado)
 
 @bp.route('/login',methods=['POST'])
