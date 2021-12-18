@@ -733,8 +733,11 @@ function borrarDato(){
   if(tabla == "cliente" || tabla == "empleado"){
     let apeDatoDel = rowID.cells[2].innerHTML;
     nombreCompletoDatoDel = nombreCompletoDatoDel + " " + apeDatoDel;
-  }  
-  let opcion = confirm("¿Está seguro que desea borrar " + tabla + " " + nombreCompletoDatoDel + "?");
+    let opcion = confirm("¿Está seguro que desea borrar " + tabla + " " + nombreCompletoDatoDel + "?");
+  }else{
+    let opcion = confirm("¿Está seguro que desea borrar " + tabla + " " + idDatoDel + "?");
+  }
+  
   if (opcion == true) {
     fetch(API_URL + "/" + tabla + "/delete/" + idFila, {
         method: "DELETE",
