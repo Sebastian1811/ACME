@@ -157,15 +157,14 @@ function deleteCookie() {
   document.cookie = "usuario=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 };
 
-// VERIFICA LA COOKIE PARA SABER SI ES
-function verificarSuperusuario() {
-  let verificado = false;
-
+function volver(){
   fetch(API_URL + "/empleado/" + parseInt(getCookie("usuario")))
   .then(res => res.json())
-  .then(data => console.log(data))
-  .catch(err => console.log(err))
-
-  return verificado;
-};
-
+  .then(data => {
+    if(data.role != "superusuario"){
+      location.href = "hubEmpleado.html";
+    }else{
+      location.href = "hub.html";
+    }
+  })
+}

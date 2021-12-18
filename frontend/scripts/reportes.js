@@ -1,5 +1,14 @@
 window.onload = function(){
   checkCookie();
+  fetch(API_URL + "/empleado/" + parseInt(getCookie("usuario")))
+  .then(res => res.json())
+  .then(data => {
+    if(data.role != "superusuario"){
+      alert("No deberías estar aqui");
+      location.href = "hubEmpleado.html";
+    }
+  })
+  .catch(err => console.log(err))
 };
 
 let canvasProds = document.getElementById("ventasProductos").getContext('2d');

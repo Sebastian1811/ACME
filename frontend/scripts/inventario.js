@@ -1,5 +1,13 @@
 window.onload = function(){
   checkCookie();
+  fetch(API_URL + "/empleado/" + parseInt(getCookie("usuario")))
+  .then(res => res.json())
+  .then(data => {
+    if(data.role != "superusuario"){
+      document.getElementById("nav-contact-tab-E").style.display = "none";
+    }
+  })
+  .catch(err => console.log(err))
 };
 
 var tableProd = document.getElementById("bodyProds");
