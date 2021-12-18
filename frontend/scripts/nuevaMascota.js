@@ -1,5 +1,12 @@
 window.onload = function(){
   checkCookie();
+  let actual = new Date();
+  let y = actual.getFullYear();
+  let m = actual.getMonth() + 1;
+  let d = actual.getDate();
+  let maxNac = y + "-" + m + "-" + d;
+  let nacimiento = document.getElementById("btnRegistrar");
+  nacimiento.setAttribute("max", maxNac);
 };
 
 let botonRegistrar = document.getElementById("btnRegistrar");
@@ -10,9 +17,13 @@ fetch(API_URL + "/mascotas")
 .then(res => res.json())
 .then(data => {
   let arrayMascotas = Object.values(data)[0];
-  let tamArrayMasctoas = arrayMascotas.length
-  arrayMascotas.sort(sortOrder("id"));
-  document.getElementById("id").value = 1;
+  if(arrayMascotas.length != 0){
+    let tamArrayMasctoas = arrayMascotas.length
+    arrayMascotas.sort(sortOrder("id"));
+    document.getElementById("id").value = arrayMascotas[tamArrayMasctoas - 1].id + 1;
+  }else{
+    document.getElementById("id").value = 1;
+  }
 })
 .catch(err => console.log(err))
 
@@ -77,7 +88,6 @@ function agregarMascota(){
 
   }).then(res => res.json())
   .then(response => {
-    console.log("Success", response)
     document.getElementById("id").value = "";
     document.getElementById("cedDueño").value = "";
     document.getElementById("nombre").value = "";
