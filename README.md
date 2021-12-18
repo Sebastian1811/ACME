@@ -7,7 +7,7 @@ El backend fue desarrollado con el framework de python llamado flask, el fronten
 
 Para el motor de base de datos se utilizo PostgreSQL.
 
-El despliegue de la base de datos y del backend para el servidor remoto fue realizado en heroku
+El despliegue de la base de datos y del backend para el servidor remoto fue realizado en heroku:
 
 ![image](https://user-images.githubusercontent.com/91354744/146653995-32032b5d-6a31-4d58-9aca-5e504febed98.png)
 
