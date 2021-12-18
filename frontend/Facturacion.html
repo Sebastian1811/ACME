@@ -39,6 +39,7 @@
     <div class="card">
       <div class="card-header">
         <strong>Generar factura</strong>
+        <strong><label id="numeroFactura" style="float: right;">Factura #</label></strong>
       </div>
       <div class="card-body">
 
@@ -168,51 +169,48 @@
           <div class="justify-content-right" style="margin-top: 20px; float: right;">
             <button type="submit" class="btn btn-secondary btn-block btn-default" onclick="location.href='hub.html'">Volver</button>
             <button type="submit" class="btn btn-warning btn-block btn-default" onclick="limpiarTabla()">Limpiar factura</button>
-            <button id="genFactura" type="button" class="btn btn-primary btn-block btn-default" data-bs-toggle="modal" data-bs-target="#genFactModal" onclick="mostrarValorFacturaModal()" disabled>Generar factura</button>
+            <button id="genFactura" type="button" class="btn btn-primary btn-block btn-default" onclick="mostrarValorFacturaModal()" disabled>Generar factura</button>
           </div>
         </div>
     </div>
-
+  </div>
     <!-- Modales -->
 
-    <!-- MODAL GENERANDO FACTURA -->
-    <div class="modal fade" id="genFactModal">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Generando factura...</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body" id="divConfFact">
-            
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
-          </div>
+  <!-- MODAL GENERANDO FACTURA -->
+  <div class="modal fade" id="genFactModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Generando factura...</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="divConfFact">
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="postFactura()">Aceptar</button>
         </div>
       </div>
     </div>
-
-    <!-- MODAL CEDULA NO REGISTRADA -->
-    <div class="modal fade" id="cedNoRegModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Error</h5>
-          </div>
-          <div class="modal-body">
-            <p id="errorCedVer"></p>
-          </div>
-          <div class="modal-footer">
-            <small>Haga click por fuera del aviso para cerrarlo</small>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
 
+  <!-- MODAL CEDULA NO REGISTRADA -->
+  <div class="modal fade" id="cedNoRegModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Error</h5>
+        </div>
+        <div class="modal-body">
+          <p id="errorCedVer"></p>
+        </div>
+        <div class="modal-footer">
+          <small>Haga click por fuera del aviso para cerrarlo</small>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="./scripts/funcExternas.js"></script>
   <script src="./scripts/facturacion.js"></script>
