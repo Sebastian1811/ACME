@@ -46,6 +46,7 @@ fetch(API_URL + "/productos")
 })
 .catch(err => console.log(err))
 
+// GRÁFICA PARA LOS PRODUCTOS
 let chartP = new Chart(canvasProds, {
   type: "bar",
   data: {
@@ -112,6 +113,7 @@ fetch(API_URL + "/empleado/ventas")
 })
 .catch(err => console.log(err))
 
+// GRÁFICA PARA LAS VENTAS
 let chartV = new Chart(canvasVentasEmpleados, {
   type: "bar",
   data: {
