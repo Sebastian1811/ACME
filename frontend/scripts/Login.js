@@ -6,16 +6,16 @@ formulario.addEventListener('submit', function(e){
 
   let datos = new FormData(formulario);
 
-  let lenID = datos.get("Cedula").length;
+  /*let lenID = datos.get("Cedula").length;
   let id = parseInt(datos.get("Cedula"));
   let tamID = ("" + id).length;
 
   if(tamID < 8 || lenID != tamID || id > 1999999999){
     alert("Ingrese un número de cédula válido");
-  }else{
+  }else{*/
     let data = {username: parseInt(datos.get("Cedula")),
       password: datos.get("pass")
-    };
+    //};
 
     if(getCookie("usuario") != null){
       document.cookie = "usuario=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
