@@ -11,4 +11,4 @@ El despliegue de la base de datos y del backend para el servidor remoto fue real
 
 El backend puede ser accedido desde el siguiente link:https://acme-backend1.herokuapp.com/
 
-El frontend fue desplegado en git y para su uso se debe acceder al siguiente link:https://sebastian1811.github.io/ACME/frontend/index.html
+El frontend fue desplegado en github pages y para su uso se debe acceder al siguiente link:https://sebastian1811.github.io/ACME/frontend/index.html
