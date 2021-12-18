@@ -1,5 +1,6 @@
+from itertools import product
 from flask import Blueprint,request,jsonify,abort
-from sqlalchemy import select
+from sqlalchemy import select,update
 from backend.database.db import Session
 from backend.database.models.Producto import Producto
 from backend.schemas.Producto import ProductoSchema
@@ -82,4 +83,27 @@ def delete_producto(procdimiento_id):
         session.rollback()
         return abort(404)    
     return jsonify(producto)
+
+@bp.route('/producto/<int:id_producto>',methods=['PUT'])
+
+def update_producto(id_producto):
+    schema =ProductoSchema(partial=1)
+    updtProducto = request.get_json()
+
+    stmt = update(Producto).where(Producto.id == id_producto).values(updtProducto)
+    try:
+        session.execute(stmt)
+        session.commit()
+        session.close()
+    except:
+        session.rollback()
+        return abort(404)    
+    stmt = select(Producto).where(Producto.id == id_producto)
+    try:
+        result=session.execute(stmt).scalars().one()
+        product = schema.dump(result)
+    except:
+        session.rollback()
+        return abort(404)
+    return jsonify(product)
 

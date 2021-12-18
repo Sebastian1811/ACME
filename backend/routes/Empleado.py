@@ -1,5 +1,5 @@
 from flask import Blueprint,jsonify,request,abort 
-from sqlalchemy import select
+from sqlalchemy import select,update
 from backend.database.models.Empleado import Empleado
 from backend.schemas.Empleado import EmpleadoSchema
 
@@ -92,3 +92,26 @@ def get_ventas_totales():
     except:
         return abort(404)
     return jsonify(reportes = report)
+
+@bp.route('/empleado/<int:id_empleado>',methods =['PUT'])
+
+def updateEmpleado(id_empleado):
+    schema = EmpleadoSchema(partial =1)
+    updtEmpleado = request.get_json()
+
+    stmt = update(Empleado).where(Empleado.id == id_empleado).values(updtEmpleado)
+    try:
+        session.execute(stmt)
+        session.commit()
+        session.close()
+    except:
+        session.rollback()
+        return abort(404)    
+    stmt = select(Empleado).where(Empleado.id == id_empleado)
+    try:
+        result=session.execute(stmt).scalars().one()
+        empleado = schema.dump(result)
+    except:
+        session.rollback()
+        return abort(404)
+    return jsonify(empleado)

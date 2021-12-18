@@ -1,5 +1,5 @@
 from flask import Blueprint,request,jsonify,abort
-from sqlalchemy import select
+from sqlalchemy import select,update
 from backend.database.db import Session
 from sqlalchemy.sql.expression import join
 from backend.database.models.Mascota import Mascota
@@ -74,3 +74,26 @@ def getMascotas(id_mascota):
     except:
         return abort(404)   
     return  jsonify(owner)
+
+@bp.route('/mascota/<int:id_mascota>',methods=['PUT'])
+
+def updateMascota(id_mascota):
+    schema =MascotaSchema(partial=1)
+    updtMascota = request.get_json()
+
+    stmt = update(Mascota).where(Mascota.id == id_mascota).values(updtMascota)
+    try:
+        session.execute(stmt)
+        session.commit()
+        session.close()
+    except:
+        session.rollback()
+        return abort(404)    
+    stmt = select(Mascota).where(Mascota.id == id_mascota)
+    try:
+        result=session.execute(stmt).scalars().one()
+        mascota = schema.dump(result)
+    except:
+        session.rollback()
+        return abort(404)
+    return jsonify(mascota)

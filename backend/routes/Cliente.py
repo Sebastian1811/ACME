@@ -1,5 +1,5 @@
 from flask import Blueprint,jsonify,request,abort
-from sqlalchemy import select
+from sqlalchemy import select,update
 from backend.database.models.Cliente import Cliente
 from backend.database.models.Mascota import Mascota
 from sqlalchemy.sql.expression import join
@@ -62,6 +62,7 @@ def delete_cliente(cliente_id):
             session.delete(i)
             session.commit()
     except:
+        session.rollback()
         return abort(404)   
     try:
         result = session.execute(stmt).scalars().one()
@@ -86,5 +87,28 @@ def getMascotas(cliente_id):
     except:
         return abort(404)    
     return  jsonify(results = mascotas)
+
+@bp.route('/cliente/<int:id_cliente>',methods =['PUT'])
+def updateCliente(id_cliente):
+    schema =ClienteSchema(partial=1)
+    updtCliente = request.get_json()
+
+    stmt = update(Cliente).where(Cliente.id == id_cliente).values(updtCliente)
+    try:
+        session.execute(stmt)
+        session.commit()
+        session.close()
+    except:
+        session.rollback()
+        return abort(404)    
+    stmt = select(Cliente).where(Cliente.id == id_cliente)
+    try:
+        result=session.execute(stmt).scalars().one()
+        product = schema.dump(result)
+    except:
+        session.rollback()
+        return abort(404)
+    return jsonify(product)
+
 
 
