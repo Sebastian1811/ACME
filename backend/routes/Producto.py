@@ -79,6 +79,7 @@ def delete_producto(procdimiento_id):
         producto = schema.dump(result)
         session.close()
     except:
+        session.rollback()
         return abort(404)    
     return jsonify(producto)
 
