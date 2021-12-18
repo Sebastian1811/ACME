@@ -38,10 +38,13 @@ def get_cliente(cliente_id):
 def post_cliente():
     posted_cliente = ClienteSchema().load(request.get_json())
     cliente = Cliente(**posted_cliente)
-    session.add(cliente)
-    session.commit()
-    new_cliente = ClienteSchema().dump(cliente)
-    session.close()
+    try:
+        session.add(cliente)
+        session.commit()
+        new_cliente = ClienteSchema().dump(cliente)
+        session.close()
+    except:
+        return abort(404)    
     return jsonify(new_cliente),201
 
 @bp.route('/cliente/delete/<int:cliente_id>',methods=['DELETE'])

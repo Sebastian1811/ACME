@@ -37,9 +37,12 @@ def get_mascota(mascota_id):
 def post_mascota():
     posted_mascota = MascotaSchema().load(request.get_json())
     mascota = Mascota(**posted_mascota)
-    session.add(mascota)
-    session.commit()
-    new_mascota = MascotaSchema().dump(mascota)
+    try:
+        session.add(mascota)
+        session.commit()
+        new_mascota = MascotaSchema().dump(mascota)
+    except:
+        return abort(404)    
     return jsonify(new_mascota),201
 
 @bp.route('/mascota/delete/<int:mascota_id>',methods=['DELETE'])

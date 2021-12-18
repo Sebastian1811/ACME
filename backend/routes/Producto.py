@@ -57,10 +57,13 @@ def get_procedimiento(procdimiento_id):
 
 def post_producto():
     posted_producto = ProductoSchema().load(request.get_json())
-    producto = Producto(**posted_producto)
-    session.add(producto)
-    session.commit()
-    new_producto = ProductoSchema().dump(producto)
+    try:
+        producto = Producto(**posted_producto)
+        session.add(producto)
+        session.commit()
+        new_producto = ProductoSchema().dump(producto)
+    except:
+        return abort(404)   
     return jsonify(new_producto),201
 
 @bp.route('/producto/delete/<int:procdimiento_id>',methods=['DELETE'])
